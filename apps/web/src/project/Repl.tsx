@@ -1,6 +1,6 @@
 // REPL panel: the heart. The StrudelMirror always holds what PLAYS. Part tabs
 // edit one file in a small CodeMirror; "Try" plays it unsaved, "Keep" commits it
-// as Daniel (PUT /files, refused while an agent turn runs).
+// as the user (PUT /files, refused while an agent turn runs).
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, cn, toast } from "@trollefsen-labs/components-react";
 import { Play, Square, Save, FlaskConical, Undo2, Repeat, Clock3, BarChart3 } from "lucide-react";
@@ -160,7 +160,7 @@ function PartEditor({ slug, file, head, turnRunning, detail, visual, onSaved }: 
     setBusy(true);
     try {
       await api("PUT", `/api/songs/${slug}/files`, { path: file.path, content: current(), baseCommit: head });
-      toast.success(`Committed ${file.path} as Daniel`);
+      toast.success(`Committed ${file.path} as your edit`);
       setDirty(false);
       onSaved();
     } catch (e) { toast.error((e as Error).message); } finally { setBusy(false); }
@@ -173,7 +173,7 @@ function PartEditor({ slug, file, head, turnRunning, detail, visual, onSaved }: 
         <span className="ml-auto" />
         <Button size="sm" variant="outline" className="h-7 px-2 text-xs" onClick={tryIt}><FlaskConical />Try</Button>
         <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" disabled={!dirty} onClick={() => view.current?.dispatch({ changes: { from: 0, to: view.current.state.doc.length, insert: file.content } })}><Undo2 />Revert</Button>
-        <Button size="sm" className="h-7 px-2 text-xs" disabled={!dirty || busy || turnRunning} title={turnRunning ? "The agent is working; wait for the turn" : "Commit this file as Daniel"} onClick={() => void keep()}><Save />Keep</Button>
+        <Button size="sm" className="h-7 px-2 text-xs" disabled={!dirty || busy || turnRunning} title={turnRunning ? "The agent is working; wait for the turn" : "Commit this file as your edit"} onClick={() => void keep()}><Save />Keep</Button>
       </div>
       <div ref={host} className="min-h-0 flex-1 overflow-auto" data-testid="part-editor" />
     </div>

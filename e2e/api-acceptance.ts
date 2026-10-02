@@ -17,14 +17,14 @@ const second = await j("POST", `/api/songs/${song.slug}/sessions`, { kind: "term
 assert.equal(second.s, 409); assert.equal(second.b.holder, ses.id);
 log(`second writer refused: 409 ${second.b.error}, holder = the chat session`);
 
-// 7: Daniel's edit refused while a turn runs
+// 7: the user's edit refused while a turn runs
 const detail = (await j("GET", `/api/songs/${song.slug}`)).b;
 const t = await j("POST", `/api/sessions/${ses.id}/turns`, { input: "Make the acid line a touch more resonant. Keep it short." }, { "idempotency-key": crypto.randomUUID() });
 assert.equal(t.s, 202);
 await sleep(1500);
 const during = await j("PUT", `/api/songs/${song.slug}/files`, { path: "parts/bass.js", content: detail.parts.bass + "// daniel\n", baseCommit: detail.head });
 assert.equal(during.s, 409); assert.equal(during.b.error, "turn-running");
-log(`Daniel's edit during the turn: 409 ${during.b.error}`);
+log(`the user's edit during the turn: 409 ${during.b.error}`);
 const dup = await j("POST", `/api/sessions/${ses.id}/turns`, { input: "another" }, { "idempotency-key": crypto.randomUUID() });
 assert.equal(dup.s, 409); log(`second prompt while running: 409 ${dup.b.error}`);
 await waitTurn(ses.id);
@@ -32,7 +32,7 @@ const d2 = (await j("GET", `/api/songs/${song.slug}`)).b;
 const after = await j("PUT", `/api/songs/${song.slug}/files`, { path: "parts/bass.js", content: d2.parts.bass.trimEnd() + "\n// tweaked by hand\n", baseCommit: d2.head });
 assert.equal(after.s, 200); assert.equal(after.b.committed, true);
 const top = execFileSync("git", ["-C", dir, "log", "-3", "--format=%an|%s"], { encoding: "utf8" }).trim().split("\n");
-assert.match(top[0]!, /^Daniel\|edit: parts\/bass\.js/); assert.match(top[1]!, /^Algorave Agent\|turn 1:/);
+assert.match(top[0]!, /^You\|edit: parts\/bass\.js/); assert.match(top[1]!, /^Algorave Agent\|turn 1:/);
 log(`after the turn: ${top[0]} / ${top[1]}`);
 const stale = await j("PUT", `/api/songs/${song.slug}/files`, { path: "parts/bass.js", content: "x", baseCommit: d2.head });
 assert.equal(stale.s, 409); log(`stale baseCommit: 409 ${stale.b.error}`);

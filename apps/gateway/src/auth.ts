@@ -1,5 +1,5 @@
 // Access control (GW-PLAN 10, adapted to this deployment). The edge (Caddy +
-// Authentik forward_auth) authenticates Daniel and copies X-authentik-Username
+// Authentik forward_auth) authenticates the user and copies X-authentik-Username
 // upstream. The gateway trusts that header ONLY from a loopback or docker-bridge
 // peer, validates Host on every request, and Origin + a custom header + JSON on
 // every mutation and WS upgrade (CSRF). The bootstrap-cookie flow is replaced

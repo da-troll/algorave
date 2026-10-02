@@ -19,7 +19,8 @@ export function git(cwd: string, args: string[], opts: { maxBuffer?: number; aut
 }
 
 export const AGENT = { name: "Algorave Agent", email: "agent@algorave.local" };
-export const DANIEL = { name: "Daniel", email: "daniel@algorave.local" };
+/** Commits the user makes by hand (REPL "Keep", branch, rewind). */
+export const USER = { name: "You", email: "you@algorave.local" };
 
 export async function head(cwd: string): Promise<string> {
   return (await git(cwd, ["rev-parse", "HEAD"])).trim();

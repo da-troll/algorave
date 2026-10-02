@@ -1,8 +1,8 @@
 # Algorave Room
 
-A private live-coding music studio on [Strudel](https://strudel.cc). You build songs by talking to a real Claude Code agent; it edits the song's Strudel parts, checks its own work with a symbolic "ears" tool before you hear anything, and every change lands in the browser REPL on the next bar. Every agent turn is a git commit, so you can compare, rewind and branch versions.
+A live-coding music studio on [Strudel](https://strudel.cc). You build songs by talking to a real Claude Code agent; it edits the song's Strudel parts, checks its own work with a symbolic "ears" tool before you hear anything, and every change lands in the browser REPL on the next bar. Every agent turn is a git commit, so you can compare, rewind and branch versions.
 
-Live (private, behind the household's Authentik): https://mvp.trollefsen.com/2026-10-02-algorave-room/
+Live demo instance (behind a login): https://mvp.trollefsen.com/2026-10-02-algorave-room/
 
 ## What is in it
 

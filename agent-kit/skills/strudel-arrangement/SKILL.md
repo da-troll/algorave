@@ -1,6 +1,6 @@
 ---
 name: strudel-arrangement
-description: Song structure in arrange.js. Sections, energy curves, 8/16/32-bar phrasing, builds (filter sweeps, snare rolls with ply, noise risers), drops, breakdowns and transitions, all expressed with arrange([bars, stack(...)], ...) where one cycle is one bar. Use when Daniel asks for an intro, build, drop, breakdown, outro, a longer track, or says the song "goes nowhere".
+description: Song structure in arrange.js. Sections, energy curves, 8/16/32-bar phrasing, builds (filter sweeps, snare rolls with ply, noise risers), drops, breakdowns and transitions, all expressed with arrange([bars, stack(...)], ...) where one cycle is one bar. Use when the user asks for an intro, build, drop, breakdown, outro, a longer track, or says the song "goes nowhere".
 ---
 
 # Strudel arrangement

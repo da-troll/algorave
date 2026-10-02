@@ -224,7 +224,7 @@ test("bad slugs are refused", async () => {
 let firstSha: string;
 let editSha: string;
 
-test("PUT a file as Daniel commits with author Daniel and message 'edit: parts/bass.js'", async () => {
+test("PUT a file as the user commits with author You and message 'edit: parts/bass.js'", async () => {
   const d = songDir(hard.slug);
   firstSha = gitIn(d, ["rev-parse", "HEAD"]);
   const content = `// test edit\n$: note("c1").s("sawtooth")\n`;
@@ -234,7 +234,7 @@ test("PUT a file as Daniel commits with author Daniel and message 'edit: parts/b
   editSha = r.body.head;
   assert.notEqual(editSha, firstSha);
   assert.equal(gitIn(d, ["rev-parse", "HEAD"]), editSha);
-  assert.equal(gitIn(d, ["log", "-1", "--format=%an <%ae>"]), "Daniel <daniel@algorave.local>");
+  assert.equal(gitIn(d, ["log", "-1", "--format=%an <%ae>"]), "You <you@algorave.local>");
   assert.equal(gitIn(d, ["log", "-1", "--format=%s"]), "edit: parts/bass.js");
   assert.equal(readFileSync(join(d, "parts/bass.js"), "utf8"), content);
   // an identical PUT commits nothing
@@ -268,7 +268,7 @@ test("timeline lists commits newest first", async () => {
   const r = await api(gw, "GET", `/api/songs/${hard.slug}/timeline`);
   assert.equal(r.status, 200);
   assert.deepEqual(r.body.map((c: any) => c.sha), [editSha, firstSha]);
-  assert.equal(r.body[0].author, "Daniel");
+  assert.equal(r.body[0].author, "You");
   assert.deepEqual(r.body[0].files, ["parts/bass.js"]);
   assert.equal(r.body[1].author, "Algorave Agent");
 });

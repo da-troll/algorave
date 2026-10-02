@@ -64,7 +64,7 @@ server.registerTool(
   "runtime_errors",
   {
     title: "Browser runtime report",
-    description: "What happened when the browser last evaluated and played the song: ok or the evaluation/scheduler error, which commit it was, and when. Use it when Daniel says something sounds broken or silent.",
+    description: "What happened when the browser last evaluated and played the song: ok or the evaluation/scheduler error, which commit it was, and when. Use it when the user says something sounds broken or silent.",
     inputSchema: {},
   },
   async () => {

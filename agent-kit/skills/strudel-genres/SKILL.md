@@ -1,6 +1,6 @@
 ---
 name: strudel-genres
-description: Style targets for this song repo. How to read the genre cards (hardgroove, peak-time techno, minimal, dub techno, acid, melodic techno, trance, progressive house, breakbeat/jungle, ambient) and turn a genre into concrete Strudel parts, tempo, key and arrangement. Use when Daniel names a genre, an artist, or asks for something to sound "more like" a style.
+description: Style targets for this song repo. How to read the genre cards (hardgroove, peak-time techno, minimal, dub techno, acid, melodic techno, trance, progressive house, breakbeat/jungle, ambient) and turn a genre into concrete Strudel parts, tempo, key and arrangement. Use when the user names a genre, an artist, or asks for something to sound "more like" a style.
 ---
 
 # Strudel genres
@@ -20,17 +20,17 @@ Ids: `hardgroove`, `peak-time-techno`, `minimal-techno`, `dub-techno`, `acid-tec
 | `bpm_range` | set `song.json` bpm inside this range |
 | `key_tendency` | which key, scale and chord colours fit |
 | `signature` | 4 to 6 idioms: the checklist your parts must hit |
-| `listen_for` | what Daniel should hear; reuse it in your closing note |
+| `listen_for` | what the user should hear; reuse it in your closing note |
 | `artists_reference` | vocabulary only; never imitate a specific track |
 | `starter` | a complete, checked song: `bpm`, `key`, `scale`, `sections`, `parts` (one `const <name> = ...` per part), `arrange` |
 
 ## Workflow: genre to parts
 
 1. Read the card. Read `song.json`.
-2. Tempo and key: if the song is new or Daniel asked for the genre, set `bpm` from the starter (inside `bpm_range`), and `key`/`scale` from the starter or `key_tendency`. Otherwise keep the song's key and transpose the idioms.
+2. Tempo and key: if the song is new or the user asked for the genre, set `bpm` from the starter (inside `bpm_range`), and `key`/`scale` from the starter or `key_tendency`. Otherwise keep the song's key and transpose the idioms.
 3. Map each `signature` bullet to a part. One idea per part file: a percussion loop is `perc.js`, a 303 line is `acid.js`, a gated supersaw is `chords.js`.
-4. Start from the starter parts when the song is empty. When the song already has parts, change them toward the signature instead of replacing everything: Daniel's ideas stay.
-5. Copy `starter.sections` and `starter.arrange` only if the arrangement is empty or Daniel asked for the genre's structure. Keep `song.json` sections and `arrange.js` in sync.
+4. Start from the starter parts when the song is empty. When the song already has parts, change them toward the signature instead of replacing everything: the user's ideas stay.
+5. Copy `starter.sections` and `starter.arrange` only if the arrangement is empty or the user asked for the genre's structure. Keep `song.json` sections and `arrange.js` in sync.
 6. Run `mcp__ears__strudel_check`. Read the drum grid and the section densities against `listen_for`.
 
 ## Translating idioms to code

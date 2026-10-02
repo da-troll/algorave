@@ -1,12 +1,12 @@
 # Closing notes
 
-The closing note is the only thing Daniel reads in chat. He hears the change and sees the diff in the Timeline, so the note connects the two: what to listen for, and where.
+The closing note is the only thing the user reads in chat. They hear the change and sees the diff in the Timeline, so the note connects the two: what to listen for, and where.
 
 ## Shape
 
 1. What changed, as music (instrument, rhythm, harmony, space, energy).
 2. Where to hear it (section, bar, beat).
-3. Anything deliberate the check flagged, or a choice he might want to reverse.
+3. Anything deliberate the check flagged, or a choice they might want to reverse.
 
 ## Good
 

@@ -1,7 +1,7 @@
 {
   "inspired_by": "https://www.instagram.com/p/DI9dkbvPURn/ (Strudel live coding, strudel.cc)",
   "project_name": "Algorave Room",
-  "description": "A private live-coding music studio on Strudel. Daniel builds songs by chatting with a real Claude Code agent in a git repo per song; the agent edits Strudel parts with in-repo music skills, checks its own work with a sandboxed symbolic 'ears' MCP tool (key fit, unknown sounds, drum grid, section density), changes land in the browser REPL on the next bar, and every turn is a commit (Timeline: A/B compare, branch, rewind). Built as a faithful slice of the Agent Session Gateway template plan: canonical event protocol, SQLite event log with afterSeq replay, SessionAdapter, a stream-json Claude adapter and a claude-only PTY terminal, Catppuccin Mocha and Latte.",
+  "description": "A live-coding music studio on Strudel. You build songs by chatting with a real Claude Code agent working in a git repo per song: it edits the song's Strudel parts using in-repo music skills, checks its own work with a sandboxed symbolic 'ears' MCP tool (key fit, unknown sounds, drum grid, density) before you hear anything, and every change lands in the browser REPL on the next bar. Every turn is a commit, so you can compare versions A/B, branch and rewind. Under the hood: a canonical event protocol, a SQLite event log with replay, a session-adapter layer with a stream-json Claude adapter and a Claude-only terminal, in Catppuccin Mocha and Latte.",
   "tech_stack": [
     "pnpm monorepo",
     "Vite",
@@ -27,7 +27,7 @@
     "ears MCP tool: strudel_check report with errors mapped to part:line, key fit, unknown sounds, per-section drum grids, density, silent and unused parts",
     "Sandboxed check: agent code evaluated under node --permission plus an in-process network lockdown",
     "Every agent turn is a git commit; Timeline with A/B compare, branch from here, rewind as a new commit",
-    "Strudel REPL with next-bar apply, pending pill, per-part Try/Keep edits committed as Daniel, pianoroll",
+    "Strudel REPL with next-bar apply, pending pill, per-part Try/Keep edits committed as your own edits, punchcard visuals",
     "Durable event log with afterSeq replay over WebSocket; reload restores the transcript; gateway restart marks sessions interrupted",
     "Claude Code terminal tab (claude only, no shell) with xterm themed from tokens",
     "Guided path (10 lessons), techno subgenre explorer (10 genres), Hydra visuals, WAV recording",
@@ -41,7 +41,7 @@
     "checked_at": "2026-10-02T22:13:54Z"
   },
   "demo_target_url": "http://127.0.0.1:3600/#/song/hardgroove-jam-c937",
-  "demo_twin_evidence": "pm2 app 2026-10-02-algorave-room-demo on 127.0.0.1:3600 (ALGORAVE_DEMO=1, data-demo/): a copy of two synthetic acceptance-test songs from the build night (no Daniel data); loopback-only bind; POST /api/songs/:slug/sessions returns 403 demo-mode (checked with curl), so the twin can never start an agent or a terminal",
+  "demo_twin_evidence": "pm2 app 2026-10-02-algorave-room-demo on 127.0.0.1:3600 (ALGORAVE_DEMO=1, data-demo/): a copy of two synthetic acceptance-test songs from the build night (no real user data); loopback-only bind; POST /api/songs/:slug/sessions returns 403 demo-mode (checked with curl), so the twin can never start an agent or a terminal",
   "demo_video_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/demo-20261002T221359.mp4",
   "demo_audio_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/voiceover-20261002T221359.wav",
   "demo_script_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/script-20261002T221359.md",

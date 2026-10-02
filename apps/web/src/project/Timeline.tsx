@@ -32,7 +32,7 @@ export function TimelinePanel({ slug, detail, refreshKey, onChanged, onCompare }
         {commits.map((c, i) => (
           <div key={c.sha} className={cn("border-b border-[var(--border-subtle)] px-2 py-1.5", open === c.sha && "bg-[var(--surface-hover)]")} data-commit={c.sha}>
             <button className="flex w-full items-center gap-2 text-left" onClick={() => setOpen(open === c.sha ? null : c.sha)}>
-              {c.author === "Daniel" ? <User className="size-3.5 shrink-0 text-[var(--text-muted)]" /> : <Bot className="size-3.5 shrink-0 text-[var(--text-muted)]" />}
+              {c.author === "You" ? <User className="size-3.5 shrink-0 text-[var(--text-muted)]" /> : <Bot className="size-3.5 shrink-0 text-[var(--text-muted)]" />}
               <span className="font-mono text-[11px] text-[var(--text-muted)]">{c.sha.slice(0, 7)}</span>
               <span className="min-w-0 flex-1 truncate text-sm text-[var(--text-primary)]">{c.subject}</span>
               {c.check && <StatusBadge entity="check" value={c.check.ok ? "ok" : "problems"}>{c.check.ok ? "ears ok" : "ears !"}</StatusBadge>}

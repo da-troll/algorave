@@ -1,6 +1,6 @@
 ---
 name: song-workflow
-description: The turn contract for working in an Algorave Room song repo. Read song.json, edit one part per idea, call mcp__ears__strudel_check after every edit, never end on a failing check, call mcp__ears__runtime_errors when Daniel says it sounds broken or silent, name parts well, and close each turn with 1 to 3 lines in musical terms. Use at the start of every turn in a song repo.
+description: The turn contract for working in an Algorave Room song repo. Read song.json, edit one part per idea, call mcp__ears__strudel_check after every edit, never end on a failing check, call mcp__ears__runtime_errors when the user says it sounds broken or silent, name parts well, and close each turn with 1 to 3 lines in musical terms. Use at the start of every turn in a song repo.
 ---
 
 # Song workflow
@@ -56,7 +56,7 @@ sections (bars @start · events/bar):
 - `unknown sound in fx: RolandTR909_cb` means that bank has no such sample. Grep `sounds.json`.
 - `CHECK FAILED ... at: parts/bass.js:2` gives file and line; the browser keeps playing the previous version until it passes.
 
-## When Daniel says it sounds broken or silent
+## When the user says it sounds broken or silent
 
 The check evaluates in Node; the browser can still fail (sample loading, audio scheduling). Call `mcp__ears__runtime_errors` first and read what the browser actually did, then fix. Do not guess.
 
@@ -76,7 +76,7 @@ The bad one lists code (the Timeline already shows it) and says nothing about wh
 
 ## Small rules that save a turn
 
-- Respect bpm, key and scale unless Daniel asks; when he does, change `song.json`.
+- Respect bpm, key and scale unless the user asks; when they do, change `song.json`.
 - Keep `song.json` sections and `arrange.js` in sync (names, order, bar counts).
 - One idea per turn unless asked for more. If you made several changes, say which is the main one.
 - Keep code readable: line breaks after `stack(` and between effect groups, a short comment at the top of each part saying what it does musically.

@@ -6,7 +6,7 @@ import { randomBytes } from "node:crypto";
 import type { Store } from "@agent-gateway/persistence";
 import { compileFiles, readSongFiles, type SongFiles } from "@algorave/ears/compile";
 import { CONTENT_DIR, SONGS_DIR, TEMPLATE_DIR } from "./config.ts";
-import { AGENT, DANIEL, branch as gitBranch, git, head as gitHead } from "./git.ts";
+import { AGENT, USER, branch as gitBranch, git, head as gitHead } from "./git.ts";
 
 export const SONG_MIGRATIONS = [
   `CREATE TABLE songs (
@@ -156,7 +156,7 @@ export class SongService {
     await git(d, ["add", "--", body.path]);
     const staged = (await git(d, ["diff", "--cached", "--name-only"])).trim();
     if (!staged) return { head: h, committed: false };
-    await git(d, ["commit", "-q", "-m", `edit: ${body.path}`], { author: DANIEL });
+    await git(d, ["commit", "-q", "-m", `edit: ${body.path}`], { author: USER });
     const nh = await gitHead(d);
     this.touch(slug, { headCommit: nh });
     return { head: nh, committed: true };
@@ -225,7 +225,7 @@ export class SongService {
     const full = (await git(d, ["rev-parse", to])).trim();
     await git(d, ["read-tree", "-u", "--reset", full]);
     if (!(await git(d, ["diff", "--cached", "--name-only"])).trim()) return { head: await gitHead(d), committed: false };
-    await git(d, ["commit", "-q", "-m", `rewind to ${full.slice(0, 7)}`], { author: DANIEL });
+    await git(d, ["commit", "-q", "-m", `rewind to ${full.slice(0, 7)}`], { author: USER });
     const h = await gitHead(d);
     this.touch(slug, { headCommit: h });
     return { head: h, committed: true };

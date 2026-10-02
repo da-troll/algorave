@@ -1,6 +1,6 @@
 ---
 name: strudel-sound-design
-description: Timbre and mix in Strudel. Synth waveforms (sine, triangle, square, sawtooth, supersaw, noise), ADSR envelopes, filter envelopes, FM, the sample banks and GM soundfonts that actually exist here (references/sounds.json is the full list), layering, and gain staging so stacked parts do not clip. Use when Daniel asks for a different sound, says something is too loud, muddy, thin or harsh, or when the check reports an unknown sound.
+description: Timbre and mix in Strudel. Synth waveforms (sine, triangle, square, sawtooth, supersaw, noise), ADSR envelopes, filter envelopes, FM, the sample banks and GM soundfonts that actually exist here (references/sounds.json is the full list), layering, and gain staging so stacked parts do not clip. Use when the user asks for a different sound, says something is too loud, muddy, thin or harsh, or when the check reports an unknown sound.
 ---
 
 # Strudel sound design

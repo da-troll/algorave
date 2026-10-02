@@ -2,7 +2,7 @@
 // BEFORE any agent-written code runs.
 //
 // Why: the box has unauthenticated loopback endpoints that act (the agent
-// bridge's /inject spawns agent turns; other household services listen on
+// bridge's /inject spawns agent turns; other local services listen on
 // loopback). A part file that could open a socket would escape the no-Bash
 // boundary without touching a file. Node 22's --permission model does not cover
 // the network, unprivileged user namespaces are blocked by AppArmor on this host

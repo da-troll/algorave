@@ -1,6 +1,6 @@
 # AGENTS.md: Algorave Room
 
-A private live-coding studio on Strudel where a Claude Code agent builds songs in a git repo per song, checked by the `ears` MCP server. It is a faithful SLICE of the Agent Session Gateway template plan (GW-PLAN): canonical protocol, SQLite event log with afterSeq replay, SessionAdapter, a stream-json Claude adapter, a claude-only PTY, Catppuccin Mocha + Latte. It is not the template itself.
+A live-coding studio on Strudel where a Claude Code agent builds songs in a git repo per song, checked by the `ears` MCP server. It is a faithful SLICE of the Agent Session Gateway template plan (GW-PLAN): canonical protocol, SQLite event log with afterSeq replay, SessionAdapter, a stream-json Claude adapter, a claude-only PTY, Catppuccin Mocha + Latte. It is not the template itself.
 
 ## Hard rules
 

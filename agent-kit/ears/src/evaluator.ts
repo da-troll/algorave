@@ -1,7 +1,7 @@
 // The sandboxed half of strudel_check. Runs as its own Node process under
 // `node --permission --allow-fs-read=<ears dist>` with an EMPTY environment
 // (see sandbox.ts). Agent-written Strudel is JavaScript; evaluating it here
-// cannot read the household's files, write anywhere, spawn processes or load
+// cannot read the host's files, write anywhere, spawn processes or load
 // addons. Network is NOT restricted by Node 22's permission model (residual,
 // documented in PROJECT.md section 10).
 //
