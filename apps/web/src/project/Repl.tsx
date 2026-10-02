@@ -27,7 +27,7 @@ export function withVisual(code: string, visual: "none" | "pianoroll" | "punchca
   // .punchcard() is the PAINTER form: it draws into the REPL panel's own canvas. .pianoroll()
   // defaults its ctx to Strudel's global full-screen canvas and would paint over the page.
   const fn = visual === "pianoroll" ? "punchcard({ fold: 1, labels: false, cycles: 4, playhead: 0.5 })" : "punchcard({ fold: 0, cycles: 2, playhead: 0 })";
-  lines.splice(2, 0, `all(x => x.${fn}) // visual: ${visual} (not part of the song)`);
+  lines.splice(2, 0, `all(x => x.${fn}) // visual: ${visual === "pianoroll" ? "punchcard roll" : "punchcard grid"} (not part of the song)`);
   return lines.join("\n");
 }
 
@@ -79,7 +79,7 @@ export function ReplPanel({ slug, detail, onSaved, ab, setAb, applyMode, setAppl
         <label className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
           <BarChart3 className="size-3.5" />
           <select aria-label="Visual feedback" value={visual} onChange={(e) => setVisual(e.target.value as "none")} className="rounded-md border border-[var(--border)] bg-[var(--surface-raised)] px-1 py-0.5 text-xs text-[var(--text-primary)]">
-            <option value="pianoroll">pianoroll</option><option value="punchcard">punchcard</option><option value="none">no visual</option>
+            <option value="pianoroll">punchcard roll</option><option value="punchcard">punchcard grid</option><option value="none">no visual</option>
           </select>
         </label>
         {st.pending && <span data-testid="pending-pill" className="inline-flex items-center gap-1 rounded-full border border-[var(--info-border)] bg-[var(--info-bg)] px-2 py-0.5 text-[11px] text-[var(--info-fg)]"><span className="size-1.5 animate-pulse rounded-full bg-[var(--info)]" />{st.pending.label}: applies on bar {Math.floor(st.pending.at) + 1}</span>}

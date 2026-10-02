@@ -25,7 +25,7 @@ export function TimelinePanel({ slug, detail, refreshKey, onChanged, onCompare }
         <select aria-label="Branch" value={detail?.branch ?? ""} disabled={busy} onChange={(e) => void act(() => api("POST", `/api/songs/${slug}/checkout`, { branch: e.target.value }), `Checked out ${e.target.value}`)} className="rounded-md border border-[var(--border)] bg-[var(--surface-raised)] px-1 py-0.5 font-mono text-xs text-[var(--text-primary)]">
           {(detail?.branches ?? []).map((b) => <option key={b} value={b}>{b}</option>)}
         </select>
-        <span className="text-[var(--text-muted)]">{commits.length} commits</span>
+        <span className="text-[var(--text-muted)]">{commits.length} {commits.length === 1 ? "commit" : "commits"}</span>
         {busy && <StatusBadge entity="lock" value="held">agent working: branch/rewind wait</StatusBadge>}
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
