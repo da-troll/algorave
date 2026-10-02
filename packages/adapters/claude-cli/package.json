@@ -1,0 +1,14 @@
+{
+  "name": "@agent-gateway/adapter-claude-cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@agent-gateway/protocol": "workspace:*",
+    "@agent-gateway/adapter-core": "workspace:*"
+  }
+}

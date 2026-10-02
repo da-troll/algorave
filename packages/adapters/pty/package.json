@@ -1,0 +1,17 @@
+{
+  "name": "@agent-gateway/adapter-pty",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@agent-gateway/protocol": "workspace:*",
+    "@agent-gateway/adapter-core": "workspace:*",
+    "node-pty": "^1.1.0",
+    "@xterm/headless": "^6.0.0",
+    "@xterm/addon-serialize": "^0.14.0"
+  }
+}

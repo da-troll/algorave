@@ -1,0 +1,14 @@
+*.log
+.env
+apps/web/public/vendor/
+data/
+dist/
+e2e/.state.json
+edit/
+node_modules/
+out/
+playwright-report/
+screenshots/
+screenshots/tmp/
+server-dist/
+test-results/

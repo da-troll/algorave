@@ -1,0 +1,29 @@
+{
+  "name": "algorave-room",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0-only",
+  "packageManager": "pnpm@10.28.2",
+  "scripts": {
+    "build": "pnpm build:ears && pnpm build:web && pnpm build:gateway",
+    "build:ears": "node scripts/build-ears.mjs",
+    "build:web": "node scripts/vendor-web.mjs && pnpm -F @algorave/web exec vite build",
+    "build:gateway": "node scripts/build-gateway.mjs",
+    "start": "node apps/gateway/dist/gateway.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test --experimental-test-module-mocks 'tests/**/*.test.ts'",
+    "test:content": "node --test tests/content.test.ts",
+    "smoke:claude": "node scripts/smoke-claude.ts",
+    "test:security": "node scripts/security-tests.ts",
+    "test:themes": "node e2e/themes.ts",
+    "check:design": "node scripts/check-design.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@types/node": "^22.15.0",
+    "esbuild": "^0.28.2",
+    "playwright": "^1.63.0",
+    "typescript": "^5.9.3"
+  }
+}

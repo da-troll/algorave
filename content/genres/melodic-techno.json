@@ -1,0 +1,58 @@
+{
+  "id": "melodic-techno",
+  "name": "Melodic techno",
+  "bpm_range": [
+    120,
+    126
+  ],
+  "key_tendency": "Minor keys with i-VI-III-VII movement (D minor: Dm Bb F C); emotional, cinematic.",
+  "signature": [
+    "Rolling offbeat bass that follows the chord root",
+    "Wide supersaw pad with slow attack",
+    "Arpeggio built from the chord tones, an octave up, with delay",
+    "Long breakdowns where the pad and arp carry the track",
+    "Big reverb on the clap"
+  ],
+  "listen_for": "The arp and the bass follow the same 4-chord cycle, so the harmony feels like it is lifting every bar. In the breakdown the kick disappears and the pad swells.",
+  "artists_reference": [
+    "Tale Of Us",
+    "Mind Against",
+    "Stephan Bodzin",
+    "Anyma",
+    "Innellea"
+  ],
+  "starter": {
+    "bpm": 124,
+    "key": "D",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 16
+      },
+      {
+        "name": "build",
+        "bars": 16
+      },
+      {
+        "name": "drop",
+        "bars": 16
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "outro",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"[~ hh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.4).room(0.4),\n  s(\"hh*16\").gain(0.15),\n).bank(\"RolandTR909\")",
+      "bass": "const bass = note(\"<d2 bb1 f1 c2>\").struct(\"[~ x x x]*4\").s(\"sawtooth\")\n  .lpf(600).decay(0.12).sustain(0).gain(0.45)",
+      "chords": "const chords = chord(\"<Dm Bb F C>\").voicing().s(\"supersaw\")\n  .attack(0.4).release(0.8).lpf(1500).room(0.7).gain(0.18)",
+      "lead": "const lead = chord(\"<Dm Bb F C>\").voicing().arp(\"0 1 2 3 2 1 0 2\").add(note(12)).s(\"triangle\")\n  .decay(0.2).sustain(0).delay(0.4).delaytime(0.36).delayfeedback(0.5).gain(0.25)"
+    },
+    "arrange": "arrange(\n  [16, stack(drums, bass.mask(\"<0 1>/8\"))],\n  [16, stack(drums, bass, chords.lpf(800))],\n  [16, stack(drums, bass, chords, lead)],\n  [8, stack(chords, lead)],\n  [8, stack(drums, bass)],\n)"
+  }
+}

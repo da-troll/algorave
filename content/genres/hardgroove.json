@@ -1,0 +1,59 @@
+{
+  "id": "hardgroove",
+  "name": "Hardgroove",
+  "bpm_range": [
+    135,
+    145
+  ],
+  "key_tendency": "Minor or no key at all: one low note, the tonality lives in the tuned toms and the rim.",
+  "signature": [
+    "Relentless 909 kick on every beat",
+    "Looped percussion: toms, rims and claps locked into a 1-bar groove",
+    "Tom and rim rolls that double up every 4 bars",
+    "Very little melody, a short rumbly bass at most",
+    "Long mixes: change one layer at a time"
+  ],
+  "listen_for": "The groove comes from the interlocking toms and rims, not from a melody. Listen for the fills doubling up at the end of each 4-bar phrase.",
+  "artists_reference": [
+    "Ben Sims",
+    "Adam Beyer (early)",
+    "Oscar Mulero",
+    "DJ Rush",
+    "Chlar"
+  ],
+  "starter": {
+    "bpm": 140,
+    "key": "F",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 8
+      },
+      {
+        "name": "groove",
+        "bars": 16
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "peak",
+        "bars": 16
+      },
+      {
+        "name": "outro",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\").gain(0.95),\n  s(\"~ cp ~ cp\").gain(0.5),\n).bank(\"RolandTR909\")",
+      "bass": "const bass = note(\"[~ f1]*4\").s(\"sawtooth\")\n  .lpf(260).lpq(4).decay(0.15).sustain(0).gain(0.5)",
+      "fx": "const fx = s(\"<cr ~ ~ ~>\").bank(\"RolandTR909\").room(0.3).gain(0.25)",
+      "hats": "const hats = stack(\n  s(\"hh*16\").gain(\"[0.22 0.38]*8\"),\n  s(\"[~ oh]*4\").gain(0.4),\n).bank(\"RolandTR909\")",
+      "perc": "const perc = stack(\n  s(\"rim(5,16,2)\").gain(0.5),\n  s(\"~ ~ lt ~ ~ mt ~ ~ ~ lt ~ ~ ht ~ mt ~\").gain(0.45),\n).bank(\"RolandTR909\").lastOf(4, (x) => x.ply(2))"
+    },
+    "arrange": "arrange(\n  [8, stack(drums, perc)],\n  [16, stack(drums, hats, perc, bass)],\n  [8, stack(hats, perc.lpf(1500))],\n  [16, stack(drums, hats, perc, bass, fx)],\n  [8, stack(drums, perc)],\n)"
+  }
+}

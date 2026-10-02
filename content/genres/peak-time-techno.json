@@ -1,0 +1,58 @@
+{
+  "id": "peak-time-techno",
+  "name": "Peak-time techno",
+  "bpm_range": [
+    128,
+    135
+  ],
+  "key_tendency": "Minor keys (A minor, F minor are common); a short riff or stab carries the hook.",
+  "signature": [
+    "Driving 909 kick, offbeat open hat, clap on 2 and 4",
+    "Rolling 16th bass that sits between the kicks",
+    "Short minor stabs or a hypnotic riff",
+    "Noise risers and big filter builds into the drop",
+    "16-bar sections with clear tension and release"
+  ],
+  "listen_for": "The bass fills the gaps between the kicks, so the low end never stops moving. The drop lands harder because the build strips the kick away first.",
+  "artists_reference": [
+    "Amelie Lens",
+    "Charlotte de Witte",
+    "Adam Beyer",
+    "Enrico Sangiuliano"
+  ],
+  "starter": {
+    "bpm": 132,
+    "key": "A",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 8
+      },
+      {
+        "name": "build",
+        "bars": 8
+      },
+      {
+        "name": "drop",
+        "bars": 16
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "drop2",
+        "bars": 16
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\").gain(1),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"[~ oh]*4\").gain(0.45),\n  s(\"hh*16\").gain(\"[0.2 0.35]*8\"),\n).bank(\"RolandTR909\")",
+      "bass": "const bass = note(\"[~ a1 a2 a1]*4\").s(\"sawtooth\")\n  .lpf(sine.range(300, 900).slow(16)).lpq(5)\n  .decay(0.1).sustain(0).gain(0.5)",
+      "chords": "const chords = chord(\"<Am Am F G>\").voicing().struct(\"~ ~ x ~ ~ ~ x ~\").s(\"sawtooth\")\n  .lpf(1800).decay(0.25).sustain(0).room(0.5).gain(0.3)",
+      "lead": "const lead = n(\"0 ~ 3 ~ 7 ~ 3 5\").scale(\"A4:minor\").s(\"square\")\n  .lpf(2500).decay(0.15).sustain(0)\n  .delay(0.4).delaytime(0.34).delayfeedback(0.45).gain(0.22)",
+      "fx": "const fx = s(\"white*16\").hpf(saw.range(500, 8000).slow(8))\n  .gain(saw.range(0.02, 0.14).slow(8)).decay(0.1).sustain(0)"
+    },
+    "arrange": "arrange(\n  [8, stack(drums, bass.mask(\"<0 1>/4\"))],\n  [8, stack(drums.mask(\"1 1 1 0\"), bass, chords, fx)],\n  [16, stack(drums, bass, chords, lead)],\n  [8, stack(chords.room(0.8), lead.lpf(900), fx)],\n  [16, stack(drums, bass, chords, lead)],\n)"
+  }
+}

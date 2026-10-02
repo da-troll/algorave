@@ -1,0 +1,25 @@
+{
+  "name": "@algorave/ears",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/check.ts",
+    "./compile": "./src/compile-song.ts",
+    "./compile-core": "./src/compile-core.ts",
+    "./check": "./src/check.ts"
+  },
+  "main": "./src/check.ts",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "@strudel/core": "1.2.6",
+    "@strudel/mini": "1.2.6",
+    "@strudel/transpiler": "1.2.6",
+    "@strudel/tonal": "1.2.6",
+    "zod": "^4.6.5",
+    "@tonaljs/tonal": "^4.10.0"
+  },
+  "bin": {
+    "algorave-ears": "./dist/server.mjs"
+  }
+}

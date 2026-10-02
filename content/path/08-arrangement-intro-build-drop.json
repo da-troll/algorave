@@ -1,0 +1,9 @@
+{
+  "id": "arrangement-intro-build-drop",
+  "order": 8,
+  "title": "Arrangement: intro, build, drop",
+  "goal": "Turn the loop into a song with an 8-bar intro, an 8-bar build and a 16-bar drop.",
+  "explain": "arrange([bars, pattern], ...) plays each section for that many bars, in order. The intro holds back the bass and lead so the drop has somewhere to go. In the build, a snare roll with ply(\"<1 1 2 2 4 4 8 8>\") doubles its speed every two bars and a white-noise riser climbs with a saw on the high-pass filter. Taking the kick out for the last bar of the build (mask) makes the drop hit harder. Keep song.json sections in sync with these bar counts.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(700).decay(0.15).sustain(0).gain(0.5)\nconst chords = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing()\n  .struct(\"~ x ~ ~ ~ x ~ ~\").s(\"square\")\n  .lpf(1400).decay(0.25).sustain(0).room(0.4).gain(0.3)\nconst lead = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing().arp(\"0 1 2 3 2 1 2 3\")\n  .add(note(12)).s(\"triangle\").decay(0.15).sustain(0).gain(0.3)\nconst roll = s(\"sd*4\").bank(\"RolandTR909\").ply(\"<1 1 2 2 4 4 8 8>\").gain(0.4)\nconst riser = s(\"white*16\").hpf(saw.range(500, 8000).slow(8)).decay(0.1).sustain(0).gain(0.1)\narrange(\n  [8, stack(drums, chords)],\n  [8, stack(drums.mask(\"<1 1 1 1 1 1 1 0>\"), bass, chords, roll, riser)],\n  [16, stack(drums, bass, chords, lead)],\n)",
+  "try_prompt": "Arrange the song as an 8-bar intro, an 8-bar build with a snare roll and a noise riser, and a 16-bar drop, and update song.json sections to match."
+}

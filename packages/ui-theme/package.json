@@ -1,0 +1,22 @@
+{
+  "name": "@agent-gateway/ui-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "main": "./src/index.tsx",
+  "dependencies": {
+    "@catppuccin/palette": "1.8.0"
+  },
+  "peerDependencies": {
+    "@trollefsen-labs/components-react": "^0.4.0",
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@trollefsen-labs/components-react": "^0.4.0",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.0"
+  }
+}

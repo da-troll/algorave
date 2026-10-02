@@ -1,0 +1,9 @@
+{
+  "id": "mixdown-and-gain-staging",
+  "order": 9,
+  "title": "Mixdown and gain staging",
+  "goal": "Balance the parts so the kick leads, nothing clips, and the bass ducks under the kick.",
+  "explain": "Every stacked part adds up, so set levels with gain per part: kick near 1, bass around 0.5, chords and leads 0.2 to 0.35, noise and FX lower still. A high-pass on the chords (hpf) clears the low end for the kick and bass. Put the bass on its own orbit and let the kick duck it: duckorbit(2) on the kick lowers everything on orbit 2 each time it hits, a built-in sidechain. If the master sounds harsh, turn parts down rather than everything up.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\").gain(0.95).duckorbit(2).duckattack(0.15).duckdepth(0.7),\n  s(\"hh*8\").gain(\"[0.2 0.35]*4\"),\n  s(\"[~ oh]*4\").gain(0.3),\n  s(\"~ cp ~ cp\").gain(0.5),\n).bank(\"RolandTR909\")\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(sine.range(400, 1800).slow(8)).lpq(6).decay(0.15).sustain(0).orbit(2).gain(0.45)\nconst chords = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing().struct(\"~ x ~ ~ ~ x ~ ~\").s(\"square\")\n  .hpf(250).lpf(1400).decay(0.25).sustain(0).room(0.4).gain(0.25)\nconst lead = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing().arp(\"0 1 2 3 2 1 2 3\").add(note(12)).s(\"triangle\")\n  .decay(0.15).sustain(0).delay(0.35).delaytime(0.35).delayfeedback(0.4).gain(0.22)\nstack(drums, bass, chords, lead)",
+  "try_prompt": "Do a mixdown: set each part's gain so the kick leads, high-pass the chords, and sidechain the bass to the kick with duckorbit."
+}

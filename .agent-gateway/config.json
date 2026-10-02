@@ -1,0 +1,10 @@
+{
+  "name": "algorave-room",
+  "workspace": { "mode": "in-place" },
+  "adapters": { "default": "claude-cli", "enabled": ["claude-cli", "pty"] },
+  "pty": { "command": "claude", "args": [] },
+  "theme": { "palette": "catppuccin", "initial": "dark", "flavor": "mocha", "accent": "mauve", "userSelectable": true },
+  "files": { "readable": [], "denied": [".runtime/**", "takes/**", ".claude/**"] },
+  "review": { "pollMs": 3000 },
+  "panels": { "stock": ["conversation", "activity", "review", "terminal"], "project": ["repl", "timeline", "visuals", "path", "genres", "record"] }
+}

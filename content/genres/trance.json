@@ -1,0 +1,60 @@
+{
+  "id": "trance",
+  "name": "Trance (Switch Angel style)",
+  "bpm_range": [
+    136,
+    142
+  ],
+  "key_tendency": "Minor keys with i-VI-III-VII (A minor: Am F C G); uplifting but minor.",
+  "signature": [
+    "Fast 16th supersaw arps that climb through the chord tones",
+    "Trance gate: a chopped supersaw chord pattern (struct with gaps)",
+    "Offbeat or rolling saw bass on the root",
+    "Breakdown with the pad alone, then a riser into the drop",
+    "Live-coded feel: one line changes at a time, often the arp pattern"
+  ],
+  "listen_for": "The gated supersaw makes the chord stutter in a fixed rhythm while the 16th arp runs over it. The arp is the hook: when it moves to a new chord, the whole track lifts.",
+  "artists_reference": [
+    "Switch Angel",
+    "Ferry Corsten",
+    "Paul van Dyk",
+    "Above & Beyond"
+  ],
+  "starter": {
+    "bpm": 138,
+    "key": "A",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 16
+      },
+      {
+        "name": "breakdown",
+        "bars": 8
+      },
+      {
+        "name": "build",
+        "bars": 8
+      },
+      {
+        "name": "drop",
+        "bars": 16
+      },
+      {
+        "name": "outro",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"[~ oh]*4\").gain(0.45),\n  s(\"~ cp ~ cp\").gain(0.5),\n  s(\"hh*16\").gain(0.18),\n).bank(\"RolandTR909\")",
+      "bass": "const bass = note(\"<a1 f1 c2 g1>\").struct(\"[~ x]*4\").s(\"sawtooth\")\n  .lpf(700).decay(0.15).sustain(0).gain(0.45)",
+      "chords": "const chords = chord(\"<Am F C G>\").voicing().s(\"supersaw\")\n  .struct(\"x x ~ x x ~ x ~ x x ~ x x ~ x x\")\n  .decay(0.1).sustain(0).lpf(2800).room(0.5).gain(0.2)",
+      "lead": "const lead = chord(\"<Am F C G>\").voicing().arp(\"<0 1 2 3>*16\").add(note(12)).s(\"supersaw\")\n  .lpf(sine.range(1200, 4000).slow(16)).decay(0.12).sustain(0)\n  .delay(0.3).delaytime(0.326).delayfeedback(0.4).gain(0.18)",
+      "fx": "const fx = s(\"white*16\").hpf(saw.range(500, 9000).slow(8))\n  .gain(saw.range(0.02, 0.15).slow(8)).decay(0.08).sustain(0)",
+      "pad": "const pad = chord(\"<Am F C G>\").voicing().s(\"supersaw\")\n  .attack(0.5).release(1.5).lpf(2000).room(0.9).size(0.9).gain(0.16)",
+      "roll": "const roll = s(\"sd*4\").bank(\"RolandTR909\").ply(\"<1 1 2 2 4 4 8 8>\")\n  .gain(saw.range(0.2, 0.5).slow(8))"
+    },
+    "arrange": "arrange(\n  [16, stack(drums, bass)],\n  [8, stack(pad, lead.lpf(1200))],\n  [8, stack(chords, lead.lpf(2000), fx, roll)],\n  [16, stack(drums, bass, chords, lead)],\n  [8, stack(drums, bass, pad)],\n)"
+  }
+}

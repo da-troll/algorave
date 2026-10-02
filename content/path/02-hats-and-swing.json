@@ -1,0 +1,9 @@
+{
+  "id": "hats-and-swing",
+  "order": 2,
+  "title": "Hats and swing",
+  "goal": "Add offbeat open hats and closed 8th hats, then give them a little swing.",
+  "explain": "stack(...) plays several patterns at once, so the kick and hats live in one part. [~ oh]*4 means \"a rest, then an open hat\" repeated four times, which lands the open hat between the kicks. A gain pattern like \"[0.25 0.45]*4\" alternates quiet and loud hats, which already sounds less robotic. swingBy(1/6, 4) delays every second subdivision in each quarter of the bar by a sixth, the classic shuffle.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\ndrums",
+  "try_prompt": "Add closed 8th hats with alternating accents and offbeat open hats to drums.js, with a light swing."
+}

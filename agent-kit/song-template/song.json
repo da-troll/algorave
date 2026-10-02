@@ -1,0 +1,13 @@
+{
+  "title": "New song",
+  "bpm": 128,
+  "key": "C",
+  "scale": "minor",
+  "genre": "peak-time techno",
+  "sections": [
+    { "name": "intro", "bars": 8 },
+    { "name": "build", "bars": 8 },
+    { "name": "drop", "bars": 16 }
+  ],
+  "notes": ""
+}

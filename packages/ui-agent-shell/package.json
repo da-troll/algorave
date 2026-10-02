@@ -1,0 +1,28 @@
+{
+  "name": "@agent-gateway/ui-agent-shell",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@agent-gateway/protocol": "workspace:*",
+    "@agent-gateway/sdk": "workspace:*",
+    "@agent-gateway/ui-theme": "workspace:*",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "lucide-react": "*"
+  },
+  "peerDependencies": {
+    "@trollefsen-labs/components-react": "^0.4.0",
+    "@trollefsen-labs/tokens-css": "^0.6.0",
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@trollefsen-labs/components-react": "^0.4.0",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.0"
+  }
+}

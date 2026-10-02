@@ -1,0 +1,9 @@
+{
+  "id": "a-lead-with-an-arp",
+  "order": 6,
+  "title": "A lead with an arp",
+  "goal": "Build an arpeggiated lead from the same chords, an octave up.",
+  "explain": "arp(\"0 1 2 3 2 1 2 3\") walks through the notes of each voiced chord by index, so the lead always fits the harmony. .add(note(12)) shifts it up an octave so it sits above the chords. Because the arp reads the same progression as the chords, a change to the progression updates both. A triangle wave is soft enough to sit on top without fighting the stabs.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(700).decay(0.15).sustain(0).gain(0.5)\nconst chords = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing()\n  .struct(\"~ x ~ ~ ~ x ~ ~\").s(\"square\")\n  .lpf(1400).decay(0.25).sustain(0).room(0.4).gain(0.3)\nconst lead = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing().arp(\"0 1 2 3 2 1 2 3\")\n  .add(note(12)).s(\"triangle\").decay(0.15).sustain(0).gain(0.3)\nstack(drums, bass, chords, lead)",
+  "try_prompt": "Add an arpeggio lead in lead.js that follows the chord progression an octave higher."
+}

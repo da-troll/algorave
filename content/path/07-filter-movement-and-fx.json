@@ -1,0 +1,9 @@
+{
+  "id": "filter-movement-and-fx",
+  "order": 7,
+  "title": "Filter movement and FX",
+  "goal": "Make the bass filter breathe and send the lead into a tempo-synced delay.",
+  "explain": "Signals like sine and saw are continuous patterns from 0 to 1; .range(400, 1800) scales them and .slow(8) stretches one sweep over 8 bars. Put a signal into lpf and the filter moves on its own, which is most of what makes a loop feel alive. lpq adds resonance at the cutoff. delay sets the send amount, delaytime is in seconds (0.35 is close to a dotted 8th at 128 bpm) and delayfeedback sets how many repeats you hear.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(sine.range(400, 1800).slow(8)).lpq(8).decay(0.15).sustain(0).gain(0.5)\nconst chords = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing()\n  .struct(\"~ x ~ ~ ~ x ~ ~\").s(\"square\")\n  .lpf(1400).decay(0.25).sustain(0).room(0.4).gain(0.3)\nconst lead = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing().arp(\"0 1 2 3 2 1 2 3\")\n  .add(note(12)).s(\"triangle\").decay(0.15).sustain(0)\n  .delay(0.4).delaytime(0.35).delayfeedback(0.45).gain(0.3)\nstack(drums, bass, chords, lead)",
+  "try_prompt": "Make the bass filter sweep slowly over 8 bars with some resonance, and put a dotted-8th delay on the lead."
+}

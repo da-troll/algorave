@@ -1,0 +1,9 @@
+{
+  "id": "record-a-take",
+  "order": 10,
+  "title": "Record a take",
+  "goal": "Play the whole arrangement from the top and record it to WAV in the Record tab.",
+  "explain": "A take is the finished arrangement played once, start to finish. Make sure the check is clean first: an error means the browser keeps playing the previous version. Add a short outro so the take ends instead of stopping dead, for example the drums alone for 8 bars. Then open the Record tab, press record, start playback from bar 1 and stop after the last section; the take is saved with the song.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(700).decay(0.15).sustain(0).gain(0.5)\nconst chords = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing()\n  .struct(\"~ x ~ ~ ~ x ~ ~\").s(\"square\")\n  .lpf(1400).decay(0.25).sustain(0).room(0.4).gain(0.3)\nconst lead = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing().arp(\"0 1 2 3 2 1 2 3\")\n  .add(note(12)).s(\"triangle\").decay(0.15).sustain(0).gain(0.3)\nconst roll = s(\"sd*4\").bank(\"RolandTR909\").ply(\"<1 1 2 2 4 4 8 8>\").gain(0.4)\narrange(\n  [8, stack(drums, chords)],\n  [8, stack(drums, bass, chords, roll)],\n  [16, stack(drums, bass, chords, lead)],\n  [8, stack(drums, chords.lpf(600))],\n)",
+  "try_prompt": "Add an 8-bar outro with just the drums and filtered chords, check that everything passes, and tell me when the song is ready to record."
+}

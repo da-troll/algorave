@@ -1,0 +1,9 @@
+{
+  "id": "a-bassline",
+  "order": 4,
+  "title": "A bassline",
+  "goal": "Write a short sawtooth bassline in C minor that sits between the kicks.",
+  "explain": "note(...) plays pitches by name: c2 is the C two octaves below middle C. Angle brackets <a b> pick one item per cycle, so the bass alternates between two 1-bar phrases. Rests on the beat leave room for the kick, which is why techno basslines usually play on the offbeats. decay(0.15).sustain(0) makes each note a short pluck and lpf(700) takes the fizz off the sawtooth.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(700).decay(0.15).sustain(0).gain(0.5)\nstack(drums, bass)",
+  "try_prompt": "Write an offbeat sawtooth bassline in C minor in bass.js that leaves space for the kick, alternating two 1-bar phrases."
+}

@@ -1,0 +1,54 @@
+{
+  "id": "breakbeat-jungle",
+  "name": "Breakbeat / jungle",
+  "bpm_range": [
+    160,
+    175
+  ],
+  "key_tendency": "Minor keys (F minor, E minor); dark pads over a sub that moves rarely.",
+  "signature": [
+    "Chopped and resequenced breakbeat (splice/chop on the brk sample)",
+    "Syncopated kick and snare reinforcing the break",
+    "Deep sine sub bass with long notes",
+    "Dark minor pad or stab, often with reverb",
+    "Ghost snares and rolls at the end of phrases"
+  ],
+  "listen_for": "The break is cut into 16 slices and replayed out of order, so it stutters and rolls. Underneath, the sub moves only once or twice per bar, at half the drum speed.",
+  "artists_reference": [
+    "Goldie",
+    "LTJ Bukem",
+    "Photek",
+    "Remarc",
+    "Dillinja"
+  ],
+  "starter": {
+    "bpm": 170,
+    "key": "F",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 8
+      },
+      {
+        "name": "roll",
+        "bars": 16
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "roll2",
+        "bars": 16
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"brk\").splice(16, \"0 1 2 3 4 5 6 7 8 9 [10 10] 11 12 13 [14 3] 15\").gain(0.7),\n  s(\"bd ~ bd ~ ~ ~ ~ ~ ~ ~ bd bd ~ ~ ~ ~\").bank(\"RolandTR909\").gain(0.6),\n  s(\"~ ~ ~ ~ sd ~ ~ sd ~ sd ~ ~ sd ~ ~ sd\").bank(\"RolandTR909\").gain(0.4),\n)",
+      "bass": "const bass = note(\"<f1 f1 db1 eb1>\").struct(\"x ~ ~ ~ ~ ~ x ~ ~ ~ x ~ ~ ~ ~ ~\").s(\"sine\")\n  .decay(0.6).sustain(0.4).gain(0.7)",
+      "chords": "const chords = chord(\"<Fm7 Fm7 Db^7 Eb>\").voicing().s(\"gm_pad_warm\")\n  .room(0.6).gain(0.25)",
+      "fx": "const fx = s(\"white*8\").hpf(saw.range(1000, 9000).slow(8))\n  .gain(saw.range(0.02, 0.1).slow(8)).decay(0.1).sustain(0)"
+    },
+    "arrange": "arrange(\n  [8, stack(chords, fx)],\n  [16, stack(drums, bass, chords)],\n  [8, stack(chords, drums.mask(\"0 0 1 1\").ply(2))],\n  [16, stack(drums, bass, chords)],\n)"
+  }
+}

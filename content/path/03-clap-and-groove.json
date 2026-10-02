@@ -1,0 +1,9 @@
+{
+  "id": "clap-and-groove",
+  "order": 3,
+  "title": "Clap and groove",
+  "goal": "Put a clap on 2 and 4 and lock in a syncopated rim with a Euclidean rhythm.",
+  "explain": "\"~ cp ~ cp\" divides the bar into four and puts the clap on beats 2 and 4. rim(3,8,2) is a Euclidean rhythm: 3 hits spread as evenly as possible over 8 steps, rotated by 2, which gives a rolling off-grid accent. Euclidean rhythms are a fast way to get grooves that feel human. Keep the rim quiet: it should be felt more than heard.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\ndrums",
+  "try_prompt": "Add a clap on 2 and 4 and a quiet Euclidean rim (3 over 8) to the drums."
+}

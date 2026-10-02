@@ -1,0 +1,50 @@
+{
+  "id": "dub-techno",
+  "name": "Dub techno",
+  "bpm_range": [
+    115,
+    125
+  ],
+  "key_tendency": "Minor 7th and minor 9th chords on one root (C minor, F minor); the chord barely changes.",
+  "signature": [
+    "Offbeat minor 9th chord stab drowned in delay and reverb",
+    "Slowly moving low-pass filter on the stab over 16 bars or more",
+    "Soft kick, quiet hats, a lot of air",
+    "Deep sine sub bass following the root",
+    "Vinyl crackle and hiss as texture"
+  ],
+  "listen_for": "The stab is short, but its delay tail fills the whole bar. Listen to the filter opening and closing so slowly it feels like weather.",
+  "artists_reference": [
+    "Basic Channel",
+    "Rhythm & Sound",
+    "Deepchord",
+    "Echospace",
+    "Maurizio"
+  ],
+  "starter": {
+    "bpm": 120,
+    "key": "C",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 16
+      },
+      {
+        "name": "deep",
+        "bars": 32
+      },
+      {
+        "name": "dub",
+        "bars": 16
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\").gain(0.85),\n  s(\"[~ hh]*4\").gain(0.28),\n  s(\"~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ rim ~\").gain(0.3),\n).bank(\"RolandTR909\").lpf(5000)",
+      "bass": "const bass = note(\"<c1 c1 f1 c1>\").struct(\"x ~ ~ x ~ ~ x ~\").s(\"sine\")\n  .decay(0.3).sustain(0.2).lpf(200).gain(0.6)",
+      "chords": "const chords = chord(\"<Cm9 Cm9 Fm9 Cm9>\").voicing().struct(\"~ x ~ ~ ~ ~ ~ ~ ~ ~ x ~ ~ ~ ~ ~\").s(\"sawtooth\")\n  .lpf(sine.range(500, 1600).slow(16)).lpq(3).decay(0.3).sustain(0)\n  .delay(0.6).delaytime(0.375).delayfeedback(0.65).room(0.8).size(0.9).gain(0.28)",
+      "fx": "const fx = s(\"crackle\").hpf(2000).gain(0.08)"
+    },
+    "arrange": "arrange(\n  [16, stack(chords, fx, drums.mask(\"<0 1>/8\"))],\n  [32, stack(drums, bass, chords, fx)],\n  [16, stack(drums.mask(\"1 0 1 0\"), bass, chords.room(0.95), fx)],\n)"
+  }
+}

@@ -1,0 +1,17 @@
+import { chromium } from "playwright";
+const base = process.env.BASE ?? "http://127.0.0.1:3553/";
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, extraHTTPHeaders: { "x-authentik-username": "daniel" } });
+const p = await ctx.newPage();
+const errs: string[] = [];
+p.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
+p.on("pageerror", (e) => errs.push(String(e)));
+await p.goto(base);
+await p.waitForSelector("text=New song", { timeout: 15000 });
+await p.screenshot({ path: "screenshots/home-mocha.png" });
+await p.click("[data-testid=theme-toggle]");
+await p.waitForTimeout(300);
+await p.screenshot({ path: "screenshots/home-latte.png" });
+console.log("theme now", await p.evaluate(() => document.documentElement.dataset.theme));
+console.log("errors:", errs.slice(0, 10));
+await b.close();

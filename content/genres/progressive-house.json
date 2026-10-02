@@ -1,0 +1,59 @@
+{
+  "id": "progressive-house",
+  "name": "Progressive house",
+  "bpm_range": [
+    120,
+    126
+  ],
+  "key_tendency": "Minor keys with lush 7th chords (G minor: Gm7 Eb^7 Bb^7 F); warm, patient.",
+  "signature": [
+    "Groove-first drums with a shaker running 16ths",
+    "Plucky 7th-chord stabs on the offbeats",
+    "Very slow filter sweep across 32 bars",
+    "A short pluck melody with long delay",
+    "Long, gradual builds, layers added every 8 or 16 bars"
+  ],
+  "listen_for": "Nothing happens suddenly: the chord filter opens over 32 bars and each section adds one layer. The shaker and offbeat stabs keep it swinging.",
+  "artists_reference": [
+    "Sasha",
+    "John Digweed",
+    "Guy J",
+    "Eelke Kleijn",
+    "Nick Warren"
+  ],
+  "starter": {
+    "bpm": 124,
+    "key": "G",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 16
+      },
+      {
+        "name": "build",
+        "bars": 16
+      },
+      {
+        "name": "main",
+        "bars": 16
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "outro",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.45),\n).bank(\"RolandTR909\")",
+      "bass": "const bass = note(\"<g1 eb1 bb1 f1>\").struct(\"x ~ ~ x ~ ~ x ~ ~ x ~ ~ x ~ x ~\").s(\"sawtooth\")\n  .lpf(500).decay(0.2).sustain(0.1).gain(0.45)",
+      "chords": "const chords = chord(\"<Gm7 Eb^7 Bb^7 F>\").voicing().struct(\"~ x ~ x ~ x ~ x\").s(\"sawtooth\")\n  .lpf(sine.range(400, 2400).slow(32)).decay(0.3).sustain(0.1)\n  .room(0.6).delay(0.3).delaytime(0.36).gain(0.2)",
+      "lead": "const lead = n(\"0 ~ 2 4 ~ 2 ~ 7\").scale(\"G4:minor\").s(\"triangle\")\n  .decay(0.2).sustain(0).delay(0.5).delaytime(0.36).delayfeedback(0.55).room(0.4).gain(0.22)",
+      "perc": "const perc = s(\"sh*16\").bank(\"RolandTR808\").gain(\"[0.15 0.3]*8\")"
+    },
+    "arrange": "arrange(\n  [16, stack(drums, perc)],\n  [16, stack(drums, perc, bass, chords)],\n  [16, stack(drums, perc, bass, chords, lead)],\n  [8, stack(chords, lead)],\n  [8, stack(drums, perc, bass)],\n)"
+  }
+}

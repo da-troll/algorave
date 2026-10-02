@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "deny": [
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Read(/home/eve/config/**)",
+      "Read(/home/eve/.claude/**)",
+      "Read(/home/eve/.ssh/**)",
+      "Read(//etc/**)",
+      "Edit(/home/eve/config/**)",
+      "Edit(/home/eve/.claude/**)",
+      "Edit(//etc/**)",
+      "Edit(//tmp/**)"
+    ]
+  }
+}

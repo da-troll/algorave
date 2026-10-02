@@ -1,0 +1,9 @@
+{
+  "id": "tempo-and-a-kick",
+  "order": 1,
+  "title": "Tempo and a kick",
+  "goal": "Get a four-on-the-floor kick running at 128 bpm.",
+  "explain": "In this app one cycle is one bar, and the tempo comes from song.json, so you never set it in code. s(\"bd*4\") plays the bd sample four times per cycle: the *4 is mini-notation for \"repeat this step four times\". Double-quoted strings are mini-notation, so spaces separate steps and every step gets an equal share of the bar. .bank(\"RolandTR909\") picks which drum machine the bd comes from.",
+  "reference_snippet": "const drums = s(\"bd*4\").bank(\"RolandTR909\")\ndrums",
+  "try_prompt": "Add a four-on-the-floor 909 kick to drums.js and keep the tempo at 128 bpm."
+}

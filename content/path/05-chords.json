@@ -1,0 +1,9 @@
+{
+  "id": "chords",
+  "order": 5,
+  "title": "Chords",
+  "goal": "Add minor 7th chord stabs that move through a 4-bar progression.",
+  "explain": "chord(\"<Cm7 Cm7 Ab^7 Bb7>\") names one chord per bar and .voicing() turns each symbol into real notes in a sensible register. Use ^7 for major 7th: Strudel does not understand maj7 and silently plays nothing. .struct(\"~ x ~ ~ ~ x ~ ~\") decides when the chord is struck, here on two offbeats per bar. Square waves with a short decay make classic techno stabs.",
+  "reference_snippet": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"hh*8\").gain(\"[0.25 0.45]*4\"),\n  s(\"[~ oh]*4\").gain(0.35),\n  s(\"~ cp ~ cp\").gain(0.6),\n  s(\"rim(3,8,2)\").gain(0.3),\n).bank(\"RolandTR909\").swingBy(1/6, 4)\nconst bass = note(\"<[~ c2 ~ c2 ~ c2 ~ eb2] [~ c2 ~ c2 ~ g1 ~ bb1]>\").s(\"sawtooth\")\n  .lpf(700).decay(0.15).sustain(0).gain(0.5)\nconst chords = chord(\"<Cm7 Cm7 Ab^7 Bb7>\").voicing()\n  .struct(\"~ x ~ ~ ~ x ~ ~\").s(\"square\")\n  .lpf(1400).decay(0.25).sustain(0).room(0.4).gain(0.3)\nstack(drums, bass, chords)",
+  "try_prompt": "Add a 4-bar chord progression (Cm7, Cm7, Ab maj7, Bb7) as short offbeat stabs in chords.js."
+}

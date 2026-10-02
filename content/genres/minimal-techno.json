@@ -1,0 +1,53 @@
+{
+  "id": "minimal-techno",
+  "name": "Minimal techno",
+  "bpm_range": [
+    122,
+    128
+  ],
+  "key_tendency": "Barely tonal: one root note and a single minor 7th stab, often D or A minor.",
+  "signature": [
+    "Dry, tight kick with lots of space around it",
+    "Clicky rims and shakers with small random variations",
+    "A short sine sub that answers the kick",
+    "One tiny chord stab soaked in delay",
+    "Change by subtraction: muting is the main tool"
+  ],
+  "listen_for": "Small details move: the shaker breathes with a slow random gain and the stab filter opens over 16 bars. Nothing is loud, everything is placed.",
+  "artists_reference": [
+    "Richie Hawtin (Plastikman)",
+    "Ricardo Villalobos",
+    "Zip",
+    "Raresh"
+  ],
+  "starter": {
+    "bpm": 126,
+    "key": "D",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 16
+      },
+      {
+        "name": "main",
+        "bars": 32
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "outro",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\").gain(0.9),\n  s(\"[~ hh]*4\").gain(0.3),\n  s(\"~ ~ rim ~ ~ rim ~ ~ ~ ~ rim ~ ~ ~ ~ rim\").gain(0.4).degradeBy(0.2),\n).bank(\"RolandTR808\")",
+      "bass": "const bass = note(\"d1 ~ ~ d1 ~ ~ d2 ~ ~ d1 ~ ~ ~ ~ d1 ~\").s(\"sine\")\n  .decay(0.2).sustain(0).gain(0.7)",
+      "chords": "const chords = chord(\"Dm7\").voicing().struct(\"~ ~ x ~ ~ ~ ~ ~ ~ x ~ ~ ~ ~ ~ ~\").s(\"triangle\")\n  .lpf(sine.range(600, 2000).slow(16)).decay(0.08).sustain(0)\n  .delay(0.5).delaytime(0.36).delayfeedback(0.55).gain(0.3)",
+      "perc": "const perc = s(\"sh*16\").bank(\"RolandTR808\")\n  .gain(perlin.range(0.1, 0.3)).pan(sine.range(0.3, 0.7).slow(4))"
+    },
+    "arrange": "arrange(\n  [16, stack(drums, perc.mask(\"<0 1>/8\"))],\n  [32, stack(drums, perc, bass, chords)],\n  [8, stack(perc, chords)],\n  [8, stack(drums, bass)],\n)"
+  }
+}

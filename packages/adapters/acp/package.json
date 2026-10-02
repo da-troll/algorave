@@ -1,0 +1,14 @@
+{
+  "name": "@agent-gateway/adapter-acp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@agent-gateway/adapter-core": "workspace:*",
+    "@agent-gateway/protocol": "workspace:*"
+  }
+}

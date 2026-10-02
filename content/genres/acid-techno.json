@@ -1,0 +1,58 @@
+{
+  "id": "acid-techno",
+  "name": "Acid techno",
+  "bpm_range": [
+    130,
+    145
+  ],
+  "key_tendency": "A or E minor; the 303 line jumps octaves on the root with a few scale tones.",
+  "signature": [
+    "Sawtooth 303-style line with high resonance (lpq 12 to 20)",
+    "The filter cutoff is the instrument: sweep it with a slow sine or perlin",
+    "Octave jumps and accents carry the riff",
+    "Pounding 909 kick, open hats, distortion via shape",
+    "Long builds that only move the filter"
+  ],
+  "listen_for": "The same 16 notes play for minutes while the filter and resonance turn the line from a burble into a scream. Listen for the squelch peaking every 8 bars.",
+  "artists_reference": [
+    "Phuture",
+    "Hardfloor",
+    "Josh Wink",
+    "Emmanuel Top",
+    "Dave Clarke"
+  ],
+  "starter": {
+    "bpm": 135,
+    "key": "A",
+    "scale": "minor",
+    "sections": [
+      {
+        "name": "intro",
+        "bars": 8
+      },
+      {
+        "name": "acid",
+        "bars": 16
+      },
+      {
+        "name": "squelch",
+        "bars": 16
+      },
+      {
+        "name": "break",
+        "bars": 8
+      },
+      {
+        "name": "outro",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "drums": "const drums = stack(\n  s(\"bd*4\"),\n  s(\"[~ oh]*4\").gain(0.4),\n  s(\"hh*16\").gain(\"[0.2 0.3]*8\"),\n  s(\"~ cp ~ cp\").gain(0.5),\n).bank(\"RolandTR909\")",
+      "bass": "const bass = note(\"a0*4\").s(\"sine\").decay(0.25).sustain(0).gain(0.5)",
+      "acid": "const acid = note(\"a1 a1 a2 a1 c2 a1 [a2 a1] e2 a1 a1 g2 a1 c3 a1 a2 e2\").s(\"sawtooth\")\n  .lpf(sine.range(300, 2400).slow(8)).lpq(16)\n  .decay(0.18).sustain(0).shape(0.3).gain(0.4)",
+      "fx": "const fx = s(\"white*16\").hpf(saw.range(800, 9000).slow(8))\n  .gain(saw.range(0.02, 0.12).slow(8)).decay(0.08).sustain(0)"
+    },
+    "arrange": "arrange(\n  [8, stack(drums, acid.lpf(500))],\n  [16, stack(drums, bass, acid)],\n  [16, stack(drums, bass, acid.lpq(20).delay(0.3).delaytime(0.33))],\n  [8, stack(acid, fx)],\n  [8, stack(drums, bass)],\n)"
+  }
+}

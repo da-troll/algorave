@@ -1,0 +1,50 @@
+{
+  "id": "ambient",
+  "name": "Ambient",
+  "bpm_range": [
+    60,
+    90
+  ],
+  "key_tendency": "Modal and open: dorian or minor with added 9ths and maj7 colours, chords that change every 2 or more bars.",
+  "signature": [
+    "No kick, no backbeat: time is felt, not stated",
+    "Slow pads with long attack and release",
+    "Sparse bells or music box with random gaps (degradeBy)",
+    "Long delays and big reverb",
+    "Slow-moving noise or filter textures"
+  ],
+  "listen_for": "The chords change every two bars and the bells drop notes at random, so the loop never quite repeats. Listen to the space: the reverb is part of the instrument.",
+  "artists_reference": [
+    "Brian Eno",
+    "Stars of the Lid",
+    "Gas",
+    "Hiroshi Yoshimura",
+    "Biosphere"
+  ],
+  "starter": {
+    "bpm": 70,
+    "key": "D",
+    "scale": "dorian",
+    "sections": [
+      {
+        "name": "emerge",
+        "bars": 8
+      },
+      {
+        "name": "bloom",
+        "bars": 16
+      },
+      {
+        "name": "drift",
+        "bars": 8
+      }
+    ],
+    "parts": {
+      "bass": "const bass = note(\"<d2 d2 g1 a1>/2\").s(\"sine\").attack(0.5).release(2).gain(0.35)",
+      "chords": "const chords = chord(\"<Dm9 G Em7 F^7>/2\").voicing().s(\"gm_pad_warm\")\n  .attack(1).release(2).room(0.9).size(0.95).gain(0.3)",
+      "lead": "const lead = n(\"0 2 4 6 ~ 4 ~ ~\").scale(\"D4:dorian\").s(\"gm_music_box\").degradeBy(0.4)\n  .delay(0.5).delaytime(0.6).delayfeedback(0.6).room(0.8).pan(sine.slow(8)).gain(0.25)",
+      "fx": "const fx = s(\"pink\").lpf(sine.range(300, 1200).slow(32)).gain(0.05)"
+    },
+    "arrange": "arrange(\n  [8, stack(chords, fx)],\n  [16, stack(chords, bass, lead, fx)],\n  [8, stack(chords.lpf(900), lead.slow(2), fx)],\n)"
+  }
+}
