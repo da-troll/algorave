@@ -46,6 +46,8 @@ The gateway expects an authenticating reverse proxy in front of it that sets `X-
 
 Built on **Strudel** by Felix Roos and contributors (AGPL-3.0, https://codeberg.org/uzu/strudel), **Hydra** by Olivia Jack (hydra-synth, AGPL-3.0), the TidalCycles sample banks and the Strudel sample maps it loads at runtime, and Claude Code.
 
+**Provenance.** The inspiration is an Instagram post of Strudel live coding (no code to take from). Algorave Room was written for this build; no code was copied from the inspiration or from the prior-art projects named in the build plan (StrudelLM, DJ Claude, strudel-mcp-server), which informed ideas only. Strudel and Hydra are used as libraries, and one function, `prebake()` in `apps/web/src/project/engine.ts`, is adapted from `@strudel/repl`'s `prebake.mjs` (AGPL-3.0, same licence as this repo).
+
 Because Strudel is AGPL-3.0, so is Algorave Room: see `LICENSE`. If you run a modified version for others over a network, you must offer them its source. The app footer links this repository.
 
 Inspired by Strudel live coders including @dj_dave____, @_switch_angel and @charstiles.
