@@ -34,5 +34,12 @@
     "Catppuccin Mocha and Latte, accent and flavor picker"
   ],
   "live_url": "https://mvp.trollefsen.com/2026-10-02-algorave-room/",
-  "github_url": "https://github.com/da-troll/algorave-room"
+  "github_url": "https://github.com/da-troll/algorave-room",
+  "seed_licence": {
+    "spdx": "UNRESOLVABLE",
+    "seed": "https://www.instagram.com/p/DI9dkbvPURn/ (Strudel live coding, strudel.cc)",
+    "checked_at": "2026-10-02T22:12:12Z"
+  },
+  "demo_target_url": "http://127.0.0.1:3600/#/song/hardgroove-jam-c937",
+  "demo_twin_evidence": "pm2 app 2026-10-02-algorave-room-demo on 127.0.0.1:3600 (ALGORAVE_DEMO=1, data-demo/): a copy of two synthetic acceptance-test songs from the build night (no Daniel data); loopback-only bind; POST /api/songs/:slug/sessions returns 403 demo-mode (checked with curl), so the twin can never start an agent or a terminal"
 }

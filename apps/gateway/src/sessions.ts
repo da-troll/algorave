@@ -12,7 +12,7 @@ import { PtyAdapter } from "@agent-gateway/adapter-pty";
 import { CodexAppServerAdapter } from "@agent-gateway/adapter-codex-app-server";
 import { AcpAdapter } from "@agent-gateway/adapter-acp";
 import { AdapterNotImplementedError } from "@agent-gateway/adapter-core";
-import { CHILD_ENV, CLAUDE_BIN, DEFAULT_MODEL, EARS_DIST, MCP_DIR, MODELS, NODE_BIN, SKILLS_DIR } from "./config.ts";
+import { DEMO, CHILD_ENV, CLAUDE_BIN, DEFAULT_MODEL, EARS_DIST, MCP_DIR, MODELS, NODE_BIN, SKILLS_DIR } from "./config.ts";
 import { AGENT, git, head as gitHead } from "./git.ts";
 import { LocalProcessRuntime, bootId, procStartTime } from "./runtime.ts";
 import type { Bus } from "./bus.ts";
@@ -76,6 +76,7 @@ export class SessionManager {
   }
 
   async createForSong(slug: string, opts: { kind: "chat" | "terminal"; model?: string; adapter?: string }): Promise<Session> {
+    if (DEMO) throw new HttpError(403, "demo-mode", "the demo twin never starts an agent or a terminal");
     const songDir = this.songs.dir(slug);
     if (opts.adapter === "codex-app-server" || opts.adapter === "acp") {
       throw new HttpError(422, "adapter-not-implemented", new AdapterNotImplementedError(opts.adapter).message, { adapter: opts.adapter });
@@ -309,6 +310,7 @@ export class SessionManager {
   }
 
   async resume(sessionId: string): Promise<Session> {
+    if (DEMO) throw new HttpError(403, "demo-mode", "the demo twin never starts an agent");
     const s = this.store.getSession(sessionId);
     if (!s) throw new HttpError(404, "no-session", "no such session");
     if (this.live.has(sessionId)) throw new HttpError(409, "already-running", "the session is already running");

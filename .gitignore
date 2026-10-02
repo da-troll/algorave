@@ -1,6 +1,7 @@
 *.log
 .env
 apps/web/public/vendor/
+data-demo/
 data/
 dist/
 e2e/.state.json

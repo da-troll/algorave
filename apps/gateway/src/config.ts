@@ -15,8 +15,13 @@ function findAppRoot(): string {
 
 export const APP_ROOT = realpathSync(findAppRoot());
 export const PORT = Number(process.env.PORT ?? 3553);
+/**
+ * Demo twin (for the gallery's demo recorder, HIVE-693): synthetic data, loopback only,
+ * identity assumed for loopback peers, and NOTHING that can start an agent or a terminal.
+ */
+export const DEMO = process.env.ALGORAVE_DEMO === "1";
 /** loopback for host tools + the docker bridge address Caddy reaches as host.docker.internal */
-export const BIND = (process.env.ALGORAVE_BIND ?? "127.0.0.1,172.17.0.1").split(",").map((s) => s.trim()).filter(Boolean);
+export const BIND = (DEMO ? "127.0.0.1" : process.env.ALGORAVE_BIND ?? "127.0.0.1,172.17.0.1").split(",").map((s) => s.trim()).filter(Boolean);
 export const DATA_DIR = resolve(process.env.ALGORAVE_DATA ?? join(APP_ROOT, "data"));
 export const SONGS_DIR = join(DATA_DIR, "songs");
 export const MCP_DIR = join(DATA_DIR, "mcp");

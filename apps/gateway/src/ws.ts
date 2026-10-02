@@ -9,6 +9,7 @@ import type { Store } from "@agent-gateway/persistence";
 import type { Bus, BusMessage } from "./bus.ts";
 import type { SessionManager } from "./sessions.ts";
 import { HttpError } from "./songs.ts";
+import { DEMO } from "./config.ts";
 
 const BUFFER_MAX = 5000;
 const PAGE = 500;
@@ -81,6 +82,7 @@ export function streamHandlers(store: Store, bus: Bus, sessions: SessionManager,
         phase = "live";
         return;
       }
+      if (DEMO) { send(ws, { type: "error", code: "demo-mode", message: "the demo twin is read-only for sessions" }); return; }
       try {
         if (msg.type === "turn.submit") {
           const r = await sessions.submitTurn(sessionId, msg.input, msg.requestId);

@@ -6,7 +6,7 @@
 // by the edge identity here; see PROJECT.md section 10 for the residual.
 import type { Context, Next } from "hono";
 import type { IncomingMessage } from "node:http";
-import { ALLOWED_HOSTS, ALLOWED_ORIGINS, ALLOWED_USER } from "./config.ts";
+import { ALLOWED_HOSTS, ALLOWED_ORIGINS, ALLOWED_USER, DEMO } from "./config.ts";
 
 export function trustedPeer(addr: string | undefined): boolean {
   if (!addr) return false;
@@ -39,11 +39,17 @@ function peerOf(c: Context): string | undefined {
   return inc?.socket?.remoteAddress;
 }
 
+/** Routes that start or drive an agent or a terminal: refused outright in the demo twin. */
+const AGENT_ROUTES = [/^\/api\/songs\/[^/]+\/sessions$/, /^\/api\/sessions$/, /^\/api\/sessions\/[^/]+\/(turns|resume|interrupt|terminal\/.*|stream)$/];
+
 export async function apiAuth(c: Context, next: Next) {
+  if (DEMO && c.req.method !== "GET" && AGENT_ROUTES.some((r) => r.test(c.req.path))) {
+    return c.json({ error: "demo-mode", message: "This is the demo twin: it never starts an agent or a terminal." }, 403);
+  }
   const upgrade = (c.req.header("upgrade") ?? "").toLowerCase() === "websocket";
   const v = checkRequest({
     method: c.req.method, host: c.req.header("host"), origin: c.req.header("origin") ?? null,
-    user: c.req.header("x-authentik-username") ?? null, peer: peerOf(c), csrf: c.req.header("x-algorave") ?? null,
+    user: c.req.header("x-authentik-username") ?? (DEMO ? ALLOWED_USER : null), peer: peerOf(c), csrf: c.req.header("x-algorave") ?? null,
     contentType: c.req.header("content-type") ?? null, upgrade,
   });
   if (!v.ok) return c.json({ error: v.code, message: v.message }, v.status);
