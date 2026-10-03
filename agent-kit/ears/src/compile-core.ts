@@ -80,7 +80,7 @@ export function compileFiles(files: SongFiles): CompiledSong {
   const parts = orderParts(names);
   const lines: string[] = [];
   const offsets: OffsetEntry[] = [];
-  lines.push(`// ${meta.title}: compiled by Algorave Room (song.json, parts/*, arrange.js)`);
+  lines.push(`// ${meta.title}: compiled by Algorave (song.json, parts/*, arrange.js)`);
   lines.push(tempoLine(meta.bpm));
   const push = (file: string, text: string) => {
     const body = text.replace(/\s+$/, "").split("\n");

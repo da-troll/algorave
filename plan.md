@@ -1,4 +1,4 @@
-# Algorave Room: build plan
+# Algorave: build plan
 
 This build follows an implementation plan written and approved on 2026-10-02, with its companion,
 the Agent Session Gateway template plan (GW-PLAN). This build is a faithful SLICE of that

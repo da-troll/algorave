@@ -1,6 +1,6 @@
 {
   "inspired_by": "https://www.instagram.com/p/DI9dkbvPURn/ (Strudel live coding, strudel.cc)",
-  "project_name": "Algorave Room",
+  "project_name": "Algorave",
   "description": "A live-coding music studio on Strudel. You build songs by chatting with a real Claude Code agent working in a git repo per song: it edits the song's Strudel parts using in-repo music skills, checks its own work with a sandboxed symbolic 'ears' MCP tool (key fit, unknown sounds, drum grid, density) before you hear anything, and every change lands in the browser REPL on the next bar. Every turn is a commit, so you can compare versions A/B, branch and rewind. Under the hood: a canonical event protocol, a SQLite event log with replay, a session-adapter layer with a stream-json Claude adapter and a Claude-only terminal, in Catppuccin Mocha and Latte.",
   "tech_stack": [
     "pnpm monorepo",
@@ -34,7 +34,7 @@
     "Catppuccin Mocha and Latte, accent and flavor picker"
   ],
   "live_url": "https://mvp.trollefsen.com/2026-10-02-algorave-room/",
-  "github_url": "https://github.com/da-troll/algorave-room",
+  "github_url": "https://github.com/da-troll/algorave",
   "seed_licence": {
     "spdx": "UNRESOLVABLE",
     "seed": "https://www.instagram.com/p/DI9dkbvPURn/ (Strudel live coding, strudel.cc)",

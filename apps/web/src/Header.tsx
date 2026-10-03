@@ -33,7 +33,7 @@ export function Header({ title, onHome, meta, session, conn, lastSeq, right }: {
 }) {
   return (
     <header className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1 border-b border-[var(--border-subtle)] bg-[var(--surface-raised)] px-3 py-1.5">
-      <button onClick={onHome} className="flex items-center gap-1.5 text-sm font-semibold text-[var(--heading-color)]" aria-label="Home"><AudioWaveform className="size-4 text-[var(--accent)]" />Algorave Room</button>
+      <button onClick={onHome} className="flex items-center gap-1.5 text-sm font-semibold text-[var(--heading-color)]" aria-label="Home"><AudioWaveform className="size-4 text-[var(--accent)]" />Algorave</button>
       <span className="text-[var(--text-muted)]">/</span>
       <h1 className="max-w-[40vw] truncate text-sm font-medium text-[var(--text-primary)]" data-testid="song-title">{title}</h1>
       {meta && (

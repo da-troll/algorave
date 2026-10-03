@@ -105,14 +105,18 @@ export function useSession(client: GatewayClient, sessionId: string | null) {
     dispatch({ t: "reset" });
     termBacklog.current = [];
     if (!sessionId) return;
+    // A replaced connection's late callbacks (its close often completes after the next one
+    // is live) must not write into this hook's state: it would mark a live stream offline.
+    let current = true;
     const c = client.sessions.connect(sessionId, {
       afterSeq: 0, clientId: cid,
-      onEvent: (e) => dispatch({ t: "event", e }),
-      onSnapshot: (s) => dispatch({ t: "snapshot", session: s.session, lastSeq: s.lastSeq }),
-      onUnknown: () => dispatch({ t: "unknown" }),
-      onState: (s) => setConn(s),
-      onError: (code, message) => setErrors((x) => [...x.slice(-4), `${code}: ${message}`]),
+      onEvent: (e) => current && dispatch({ t: "event", e }),
+      onSnapshot: (s) => current && dispatch({ t: "snapshot", session: s.session, lastSeq: s.lastSeq }),
+      onUnknown: () => current && dispatch({ t: "unknown" }),
+      onState: (s) => { if (current) setConn(s); },
+      onError: (code, message) => current && setErrors((x) => [...x.slice(-4), `${code}: ${message}`]),
       onTerminal: (m) => {
+        if (!current) return;
         if (m.type === "terminal.snapshot") termBacklog.current = [m];
         else termBacklog.current.push(m);
         if (termBacklog.current.length > 4000) termBacklog.current = termBacklog.current.slice(-2000);
@@ -120,7 +124,7 @@ export function useSession(client: GatewayClient, sessionId: string | null) {
       },
     });
     connRef.current = c;
-    return () => { c.close(); connRef.current = null; };
+    return () => { current = false; c.close(); connRef.current = null; };
   }, [client, sessionId, cid]);
 
   return {

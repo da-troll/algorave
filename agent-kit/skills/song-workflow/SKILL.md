@@ -1,6 +1,6 @@
 ---
 name: song-workflow
-description: The turn contract for working in an Algorave Room song repo. Read song.json, edit one part per idea, call mcp__ears__strudel_check after every edit, never end on a failing check, call mcp__ears__runtime_errors when the user says it sounds broken or silent, name parts well, and close each turn with 1 to 3 lines in musical terms. Use at the start of every turn in a song repo.
+description: The turn contract for working in an Algorave song repo. Read song.json, edit one part per idea, call mcp__ears__strudel_check after every edit, never end on a failing check, call mcp__ears__runtime_errors when the user says it sounds broken or silent, name parts well, and close each turn with 1 to 3 lines in musical terms. Use at the start of every turn in a song repo.
 ---
 
 # Song workflow

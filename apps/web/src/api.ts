@@ -16,4 +16,4 @@ export type Commit = { sha: string; author: string; date: string; subject: strin
 export type Genre = { id: string; name: string; bpm_range: [number, number]; key_tendency: string; signature: string[]; listen_for: string; artists_reference: string[]; starter: { bpm: number; key: string; scale: string; sections: Array<{ name: string; bars: number }>; parts: Record<string, string>; arrange: string } };
 export type Lesson = { id: string; order: number; title: string; goal: string; explain: string; reference_snippet: string; try_prompt: string };
 
-export const PROJECT_REPO = "https://github.com/da-troll/algorave-room";
+export const PROJECT_REPO = "https://github.com/da-troll/algorave";

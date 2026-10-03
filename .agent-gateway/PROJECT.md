@@ -1,4 +1,4 @@
-# Algorave Room: agent gateway overlay
+# Algorave: agent gateway overlay
 
 Template version: none yet. This repo is a faithful SLICE of the Agent Session Gateway template plan (GW-PLAN), built 2026-10-02. The template repo will be extracted from this code later; this file records what the slice chose and where it departs. Mode: A (greenfield, project panels live in `apps/web/src/project/`).
 
@@ -46,7 +46,7 @@ The song's own `AGENTS.md` (the music-director brief, `agent-kit/song-template/A
 
 ## 9. Acceptance additions
 
-Plan section 13 of the Algorave Room plan, all run with evidence in the build report: typecheck, tests, `smoke:claude`, the security tests, end-to-end in both themes at dpr 2, reload mid-turn, gateway restart, Timeline, Terminal, Record, mobile width.
+Plan section 13 of the Algorave plan, all run with evidence in the build report: typecheck, tests, `smoke:claude`, the security tests, end-to-end in both themes at dpr 2, reload mid-turn, gateway restart, Timeline, Terminal, Record, mobile width.
 
 ## 10. Deviations from the template, and the generic option each one needs
 

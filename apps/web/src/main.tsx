@@ -31,7 +31,7 @@ function App() {
         {m && cfg ? <SongPage key={m[1]} slug={m[1]!} models={cfg.models} defaultModel={cfg.defaultModel} navigate={navigate} /> : <Home navigate={navigate} />}
       </div>
       <footer className="shrink-0 border-t border-[var(--border-subtle)] bg-[var(--surface-raised)] px-3 py-1 text-[10px] text-[var(--text-muted)]">
-        Built on <a className="text-[var(--link)]" href="https://strudel.cc" target="_blank" rel="noreferrer">Strudel</a> (AGPL-3.0, <a className="text-[var(--link)]" href="https://codeberg.org/uzu/strudel" target="_blank" rel="noreferrer">source</a>) and Hydra. Algorave Room is AGPL-3.0: <a className="text-[var(--link)]" href={PROJECT_REPO} target="_blank" rel="noreferrer">source</a>.
+        Built on <a className="text-[var(--link)]" href="https://strudel.cc" target="_blank" rel="noreferrer">Strudel</a> (AGPL-3.0, <a className="text-[var(--link)]" href="https://codeberg.org/uzu/strudel" target="_blank" rel="noreferrer">source</a>) and Hydra. Algorave is AGPL-3.0: <a className="text-[var(--link)]" href={PROJECT_REPO} target="_blank" rel="noreferrer">source</a>.
       </footer>
       <Toaster position="bottom-right" />
     </div>

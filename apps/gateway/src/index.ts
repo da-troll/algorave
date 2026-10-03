@@ -1,4 +1,4 @@
-// Algorave Room gateway: Hono + better-sqlite3 + WS. Serves the web app (out/)
+// Algorave gateway: Hono + better-sqlite3 + WS. Serves the web app (out/)
 // and /api/* on loopback and the docker bridge address only.
 import { Hono, type Context } from "hono";
 import { serve } from "@hono/node-server";
