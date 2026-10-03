@@ -38,14 +38,14 @@
   "seed_licence": {
     "spdx": "UNRESOLVABLE",
     "seed": "https://www.instagram.com/p/DI9dkbvPURn/ (Strudel live coding, strudel.cc)",
-    "checked_at": "2026-10-02T22:46:36Z"
+    "checked_at": "2026-10-03T00:18:14Z"
   },
   "demo_target_url": "http://127.0.0.1:3600/#/song/hardgroove-jam-c937",
   "demo_twin_evidence": "pm2 app 2026-10-02-algorave-room-demo on 127.0.0.1:3600 (ALGORAVE_DEMO=1, data-demo/): a copy of two synthetic acceptance-test songs from the build night (no real user data); loopback-only bind; POST /api/songs/:slug/sessions returns 403 demo-mode (checked with curl), so the twin can never start an agent or a terminal",
-  "demo_video_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/demo-20261002T224641.mp4",
-  "demo_audio_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/voiceover-20261002T224641.wav",
-  "demo_script_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/script-20261002T224641.md",
-  "demo_srt_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/demo-20261002T224641.srt",
-  "demo_transcript_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/transcript-20261002T224641.json",
+  "demo_video_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/demo-20261003T001819.mp4",
+  "demo_audio_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/voiceover-20261003T001819.wav",
+  "demo_script_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/script-20261003T001819.md",
+  "demo_srt_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/demo-20261003T001819.srt",
+  "demo_transcript_url": "https://clawdash.storage.trollefsen.com/mvp/2026-10-02-algorave-room/transcript-20261003T001819.json",
   "demo_audio_source": "original TTS voiceover (WAV)"
 }
