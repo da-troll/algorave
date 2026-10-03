@@ -121,7 +121,18 @@ export class SongService {
       song: this.get(slug), meta: JSON.parse(files.songJson), parts: files.parts, arrange: files.arrange,
       branch: await gitBranch(d), head: await gitHead(d), branches: (await git(d, ["branch", "--format=%(refname:short)"])).trim().split("\n").filter(Boolean),
       writerSession: this.writerSession(slug), turnRunning: this.turnRunning(slug),
+      sessions: this.sessionsFor(d),
     };
+  }
+
+  /** Every session that ever ran in this song's repo, newest first (chat picker, terminal tab). */
+  sessionsFor(dir: string) {
+    const real = realpathSync(dir);
+    const turns = this.store.db.prepare("SELECT COUNT(*) AS n FROM turns WHERE session_id = ?");
+    return this.store.listSessions()
+      .filter((s) => s.workspacePath === real || s.workspacePath === dir)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .map((s) => ({ id: s.id, adapter: s.adapter, status: s.status, model: s.model ?? null, createdAt: s.createdAt, lastActivityAt: s.lastActivityAt, canResume: !!s.recovery?.canResume, turns: (turns.get(s.id) as { n: number }).n }));
   }
 
   /** Files at a commit, read with git (never checking it out). */

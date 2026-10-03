@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, cn, toast } from "@trollefsen-labs/components-react";
 import { Activity, FileDiff, GitCommitHorizontal, Map, Disc3, Sparkles, Mic, SquareTerminal, MessageSquare, Music, CirclePlay, Power, RotateCcw, CircleStop } from "lucide-react";
 import { ActivityPanel, ConversationPanel, ReviewPanel, StatusBadge, TerminalPanel, useSession } from "@agent-gateway/ui-agent-shell";
-import { client, api, type Compiled, type SongDetail } from "./api.ts";
+import { client, api, type Compiled, type SongDetail, type SongSession } from "./api.ts";
 import { ReplPanel, withVisual } from "./project/Repl.tsx";
 import { TimelinePanel } from "./project/Timeline.tsx";
 import { GenresPanel } from "./project/Genres.tsx";
@@ -46,7 +46,9 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
   const [visual, setVisual] = useState<"none" | "pianoroll" | "punchcard">("pianoroll");
   const [ab, setAb] = useState<{ a?: { sha: string; code: string }; b?: { sha: string; code: string }; active: "a" | "b" | null }>({ active: null });
   const [songCode, setSongCode] = useState("");
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  // The chat panel follows a CHAT session (picked, else the live one, else the newest);
+  // a terminal session lives only in the Terminal tab, so it never hides the conversation.
+  const [pickedChat, setPickedChat] = useState<string | null>(null);
   const [confirmStop, setConfirmStop] = useState<null | "stop" | "terminal">(null);
   const appliedHead = useRef<string | null>(null);
 
@@ -54,7 +56,6 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
   useEffect(() => {
     void api<SongDetail>("GET", `/api/songs/${slug}`).then((d) => {
       setDetail(d);
-      setSessionId((cur) => cur ?? d.writerSession ?? d.song.lastSessionId);
     }).catch((e) => toast.error((e as Error).message));
   }, [slug, refreshKey]);
 
@@ -75,10 +76,18 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
     engine.onRuntime = (r) => { void api("POST", `/api/songs/${slug}/runtime-report`, { ...r, commit: appliedHead.current ?? undefined }).catch(() => {}); };
   }, [slug]);
 
+  const all = detail?.sessions ?? [];
+  const chats = all.filter((x) => x.adapter !== "pty");
+  const writer = all.find((x) => x.id === detail?.writerSession) ?? null;
+  const sessionId = pickedChat ?? (writer && writer.adapter !== "pty" ? writer.id : chats[0]?.id ?? null);
+  const termId = writer?.adapter === "pty" ? writer.id : null;
   const handle = useSession(client, sessionId);
+  const term = useSession(client, termId);
   const s = handle.state.session;
   const live = !!detail?.writerSession && detail.writerSession === sessionId;
-  const kind = s?.adapter === "pty" ? "terminal" : "chat";
+  const terminalHolds = !!termId;
+  // the header reports whichever session holds the song; with none, the chat being viewed
+  const top = terminalHolds ? term : handle;
   // refetch the song when the agent's work lands
   const lastActivity = handle.state.activity[handle.state.activity.length - 1];
   useEffect(() => {
@@ -87,19 +96,23 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
     if (lastActivity.type === "turn.started" || lastActivity.type === "turn.completed" || lastActivity.type === "turn.failed" || lastActivity.type === "turn.interrupted" || (lastActivity.type === "session.status" && ["stopped", "failed", "interrupted"].includes(lastActivity.payload.status))) refresh();
   }, [lastActivity?.id]);
 
+  // a terminal that ends (claude exited, or stopped) releases the song: refetch so the tab resets
+  const termStatus = term.state.session?.status;
+  useEffect(() => { if (termStatus && ["stopped", "failed", "interrupted"].includes(termStatus)) refresh(); }, [termStatus]);
+
   const start = async (k: "chat" | "terminal") => {
     try {
       const ses = await api<{ id: string }>("POST", `/api/songs/${slug}/sessions`, { kind: k, model });
-      setSessionId(ses.id);
+      if (k === "chat") setPickedChat(ses.id);
       if (k === "terminal") setTab("terminal");
       refresh();
     } catch (e) {
       const err = e as { code?: string; body?: { holder?: string } };
-      if (err.code === "workspace-locked") { toast.error("Another session is writing to this song. Open it or stop it first."); if (err.body?.holder) setSessionId(err.body.holder); }
+      if (err.code === "workspace-locked") { toast.error("Another session is writing to this song. Open it or stop it first."); }
       else toast.error((e as Error).message);
     }
   };
-  const stop = async () => { if (sessionId) { await client.sessions.stop(sessionId).catch((e) => toast.error((e as Error).message)); refresh(); } };
+  const stop = async () => { const id = detail?.writerSession; if (id) { await client.sessions.stop(id).catch((e) => toast.error((e as Error).message)); refresh(); } };
   const resume = async () => { if (sessionId) { try { await client.sessions.resume(sessionId); refresh(); } catch (e) { toast.error((e as Error).message); } } };
   const send = async (text: string) => {
     if (!sessionId) return;
@@ -112,24 +125,32 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
     catch (e) { toast.error((e as Error).message); }
   };
 
-  const chatDisabled = !sessionId ? "Start a session to talk to the producer." : !live ? (s?.recovery?.canResume ? "This session is not running. Resume it to continue the conversation." : "This session has ended. Start a new one.") : kind !== "chat" ? "A terminal session holds the song. Use the Terminal tab." : null;
+  const chatDisabled = terminalHolds ? "A terminal session holds the song. Use the Terminal tab, or stop it to chat." : !sessionId ? "Start a session to talk to the producer." : !live ? (s?.recovery?.canResume ? "This session is not running. Resume it to continue the conversation." : "This session has ended. Start a new one.") : null;
+  const label = (x: SongSession) => `${new Date(x.createdAt).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })} · ${x.status} · ${x.turns} ${x.turns === 1 ? "turn" : "turns"}`;
+  const picker = chats.length > 1 ? (
+    <select aria-label="Chat session" value={sessionId ?? ""} onChange={(e) => setPickedChat(e.target.value)} className="max-w-[16rem] truncate rounded-md border border-[var(--border)] bg-[var(--surface-raised)] px-1 py-0.5 text-xs text-[var(--text-primary)]" data-testid="chat-picker">
+      {chats.map((x) => <option key={x.id} value={x.id}>{x.id === detail?.writerSession ? "live · " : ""}{label(x)}</option>)}
+    </select>
+  ) : null;
 
   const sessionBar = (
     <div className="flex flex-wrap items-center gap-1.5 border-b border-[var(--border-subtle)] px-2 py-1.5 text-xs">
       {live ? (
         <>
-          <StatusBadge entity="session" value={s?.status ?? "running"}>{kind} · {s?.status ?? "running"}</StatusBadge>
-          {kind === "chat" && <span className="font-mono text-[var(--text-muted)]">{s?.model}</span>}
+          <StatusBadge entity="session" value={s?.status ?? "running"}>chat · {s?.status ?? "running"}</StatusBadge>
+          {picker}
+          <span className="font-mono text-[var(--text-muted)]">{s?.model}</span>
           <Button size="sm" variant="ghost" className="ml-auto h-7 px-2 text-xs" onClick={() => setConfirmStop("stop")}><Power />Stop session</Button>
         </>
       ) : (
         <>
           {s && <StatusBadge entity="session" value={s.status}>{s.status}</StatusBadge>}
+          {picker}
           <select aria-label="Model" value={model} onChange={(e) => setModel(e.target.value)} className="rounded-md border border-[var(--border)] bg-[var(--surface-raised)] px-1 py-0.5 font-mono text-xs text-[var(--text-primary)]">
             {models.map((m) => <option key={m} value={m}>{m}</option>)}
           </select>
-          <Button size="sm" className="h-7 px-2 text-xs" onClick={() => void start("chat")} data-testid="start-chat"><CirclePlay />New chat session</Button>
-          {s?.recovery?.canResume && <Button size="sm" variant="outline" className="h-7 px-2 text-xs" onClick={() => void resume()}><RotateCcw />Resume</Button>}
+          <Button size="sm" className="h-7 px-2 text-xs" disabled={terminalHolds} onClick={() => void start("chat")} data-testid="start-chat"><CirclePlay />New chat session</Button>
+          {s?.recovery?.canResume && <Button size="sm" variant="outline" className="h-7 px-2 text-xs" disabled={terminalHolds} onClick={() => void resume()}><RotateCcw />Resume</Button>}
         </>
       )}
     </div>
@@ -145,13 +166,19 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
     </div>
   );
   const repl = <ReplPanel slug={slug} detail={detail} onSaved={refresh} ab={ab} setAb={setAb} applyMode={applyMode} setApplyMode={setApplyMode} visual={visual} setVisual={setVisual} songCode={songCode} />;
-  const terminal = live && kind === "terminal" && sessionId ? (
-    <TerminalPanel handle={handle} sessionId={sessionId} live={live} claim={async (steal) => (await client.sessions.claimTerminal(sessionId, handle.clientId, steal)).generation} />
+  const terminal = termId ? (
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="flex items-center gap-1.5 border-b border-[var(--border-subtle)] px-2 py-1 text-xs">
+        <StatusBadge entity="session" value={term.state.session?.status ?? "running"}>terminal · {term.state.session?.status ?? "running"}</StatusBadge>
+        <Button size="sm" variant="ghost" className="ml-auto h-7 px-2 text-xs" onClick={() => setConfirmStop("stop")}><Power />Stop terminal</Button>
+      </div>
+      <div className="min-h-0 flex-1"><TerminalPanel handle={term} sessionId={termId} live claim={async (steal) => (await client.sessions.claimTerminal(termId, term.clientId, steal)).generation} /></div>
+    </div>
   ) : (
     <div className="p-3 text-sm text-[var(--text-secondary)]">
       <p>Open Claude Code itself in this song's repo, with the same tools and the same ears. There is no shell: when claude exits, the terminal ends.</p>
-      <Button className="mt-2" size="sm" onClick={() => (live ? setConfirmStop("terminal") : void start("terminal"))}><SquareTerminal />Open Claude Code terminal</Button>
-      {live && <p className="mt-1 text-xs text-[var(--warning-fg)]">One writer per song: this stops the running chat session first (the conversation can be resumed later).</p>}
+      <Button className="mt-2" size="sm" onClick={() => (detail?.writerSession ? setConfirmStop("terminal") : void start("terminal"))}><SquareTerminal />Open Claude Code terminal</Button>
+      {!!detail?.writerSession && <p className="mt-1 text-xs text-[var(--warning-fg)]">One writer per song: this stops the running chat session first (the conversation can be resumed later).</p>}
     </div>
   );
   const panel = (t: Tab): ReactNode => {
@@ -185,7 +212,7 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
       <Header
         title={detail?.meta.title ?? "…"} onHome={() => navigate("/")}
         meta={detail ? { branch: detail.branch, bpm: detail.meta.bpm, key: `${detail.meta.key} ${detail.meta.scale}` } : undefined}
-        session={s ? { status: s.status, model: s.model } : undefined} conn={sessionId ? handle.conn : undefined} lastSeq={handle.state.lastSeq}
+        session={top.state.session ? { status: top.state.session.status, model: top.state.session.model } : undefined} conn={(terminalHolds ? termId : sessionId) ? top.conn : undefined} lastSeq={top.state.lastSeq}
         right={handle.state.runningTurnId ? <Button size="sm" variant="destructive" className="h-8" onClick={() => void interrupt()}><CircleStop />Interrupt</Button> : null}
       />
       {mobile ? (
@@ -208,8 +235,8 @@ export function SongPage({ slug, models, defaultModel, navigate }: { slug: strin
       <Dialog open={!!confirmStop} onOpenChange={(o) => !o && setConfirmStop(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{confirmStop === "terminal" ? "Stop the chat and open the terminal?" : "Stop this session?"}</DialogTitle>
-            <DialogDescription>The song repo and every commit are kept. {kind === "chat" ? "The conversation can be resumed later." : "A terminal session cannot be resumed."}</DialogDescription>
+            <DialogTitle>{confirmStop === "terminal" ? "Stop the chat and open the terminal?" : terminalHolds ? "Stop the terminal?" : "Stop this session?"}</DialogTitle>
+            <DialogDescription>The song repo and every commit are kept. {terminalHolds ? "A terminal session cannot be resumed." : "The conversation can be resumed later."}</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setConfirmStop(null)}>Cancel</Button>

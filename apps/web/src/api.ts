@@ -10,7 +10,9 @@ export type SongDetail = {
   song: SongSummary & { progress: string[] };
   meta: { title: string; bpm: number; key: string; scale: string; genre?: string; sections?: Array<{ name: string; bars: number }> };
   parts: Record<string, string>; arrange: string; branch: string; head: string; branches: string[]; writerSession: string | null; turnRunning: boolean;
+  sessions: SongSession[];
 };
+export type SongSession = { id: string; adapter: string; status: string; model: string | null; createdAt: string; lastActivityAt: string; canResume: boolean; turns: number };
 export type Compiled = { code: string; commit: string; parts: string[]; meta: SongDetail["meta"] };
 export type Commit = { sha: string; author: string; date: string; subject: string; files: string[]; check: { ok: boolean; summary: string } | null };
 export type Genre = { id: string; name: string; bpm_range: [number, number]; key_tendency: string; signature: string[]; listen_for: string; artists_reference: string[]; starter: { bpm: number; key: string; scale: string; sections: Array<{ name: string; bars: number }>; parts: Record<string, string>; arrange: string } };
