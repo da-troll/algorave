@@ -1,0 +1,3 @@
+# HIVE-1270: the runtime this app was last installed and checked on (2026-10-17).
+[tools]
+node = "22.22.0"
